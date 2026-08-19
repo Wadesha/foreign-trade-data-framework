@@ -208,56 +208,99 @@ button.btn.primary:hover{background:#3b82f6;color:#0b1220}
 .roi-cell .trend.up{color:var(--green)}
 .roi-cell .trend.down{color:var(--red)}
 
-/* ===== Full-flow Simulator ===== */
-.sim-layout{display:grid;grid-template-columns:290px 1fr;gap:14px}
-@media(max-width:920px){.sim-layout{grid-template-columns:1fr}}
-.sim-side{display:flex;flex-direction:column;gap:12px}
-.sim-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.sim-card h3{font-size:13px;margin-bottom:10px;color:var(--blue)}
-.sim-main{display:flex;flex-direction:column;gap:12px}
-.sim-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
-.sim-kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-align:center}
-.sim-kpi .v{font-size:19px;font-weight:800;font-family:var(--mono)}
-.sim-kpi .v.pos{color:var(--green)}
-.sim-kpi .v.neg{color:var(--red)}
-.sim-kpi .l{font-size:11px;color:var(--muted);margin-top:2px}
-.sim-kpi .d{font-size:10.5px;font-family:var(--mono);margin-top:2px}
-.sim-kpi .d.up{color:var(--green)}
-.sim-kpi .d.down{color:var(--red)}
-.ctrl-row{margin:10px 0}
-.ctrl-row label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:4px}
-.ctrl-row label b{color:var(--blue);font-family:var(--mono);font-weight:600}
-.ctrl-row input[type=range]{width:100%;accent-color:var(--blue);height:4px}
-.ctrl-row select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:6px 8px;font-size:12.5px}
+/* ===== 决策模拟游戏 ===== */
+.g-topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:14px;flex-wrap:wrap;position:sticky;top:49px;z-index:40}
+.g-progress{font-size:13px;font-weight:700;color:var(--blue);white-space:nowrap}
+.g-stats{display:flex;gap:14px;flex-wrap:wrap}
+.gstat{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.gstat b{color:var(--text);font-family:var(--mono);font-size:13px;margin-left:4px}
+.gstat b.warn{color:var(--amber)}
+.gstat b.bad{color:var(--red)}
 
-/* causal flow */
-.sim-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.flow-node{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:11.5px;min-width:96px;text-align:center}
-.flow-node .fv{font-size:13px;font-weight:700;font-family:var(--mono);margin-top:2px;display:block}
-.flow-node.hl{border-color:var(--blue);background:rgba(96,165,250,.08)}
-.flow-node .fv.pos{color:var(--green)}
-.flow-node .fv.neg{color:var(--red)}
-.flow-arrow{color:var(--muted);font-size:14px;flex-shrink:0}
+/* 开场 */
+.g-intro{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 32px;text-align:center}
+.g-intro h3{font-size:20px;margin-bottom:10px}
+.g-intro .g-story{text-align:left;background:var(--surface2);border:1px dashed var(--border);border-radius:8px;padding:16px 20px;margin:16px 0;font-size:13.5px;color:var(--text);line-height:1.8}
+.g-intro .g-story b{color:var(--blue)}
+.g-init-stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.g-init-stats span{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-size:12px;color:var(--muted)}
+.g-init-stats span b{display:block;font-size:15px;color:var(--blue);font-family:var(--mono)}
+.g-btn{background:var(--blue);color:#0b1220;border:none;border-radius:8px;padding:12px 34px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;transition:.15s;margin-top:6px}
+.g-btn:hover{background:#3b82f6;transform:translateY(-1px)}
+.g-btn.ghost{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.g-btn.ghost:hover{border-color:var(--blue);color:var(--blue);background:var(--surface2)}
 
-/* funnel */
-.funnel{display:flex;flex-direction:column;gap:3px}
-.fstage{display:flex;align-items:center;gap:8px}
-.fstage .fl{width:72px;font-size:11px;color:var(--muted);text-align:right;flex-shrink:0}
-.fstage .fb{flex:1;background:var(--surface2);border-radius:4px;overflow:hidden}
-.fstage .fb i{display:block;height:18px;border-radius:4px;opacity:.85;transition:width .3s}
-.fstage .fv{width:90px;font-size:11px;font-family:var(--mono);flex-shrink:0}
-.fstage .fv em{font-style:normal;color:var(--muted);font-size:10px;display:block}
+/* 场景卡 */
+.g-scene{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 26px}
+.g-scene-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.g-scene-num{background:var(--blue);color:#0b1220;font-weight:800;font-size:12px;border-radius:6px;padding:3px 10px;font-family:var(--mono)}
+.g-scene-cat{font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:4px;padding:2px 8px}
+.g-scene h3{font-size:17px;margin-bottom:10px}
+.g-scene-body{font-size:13.5px;color:var(--text);background:var(--surface2);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:14px 18px;line-height:1.8;margin-bottom:6px}
+.g-scene-body b{color:var(--amber)}
+.g-scene-body .g-data{display:block;margin-top:8px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.g-ask{font-size:13px;color:var(--blue);font-weight:700;margin:14px 0 10px}
 
-/* waterfall */
-.waterfall{display:flex;flex-direction:column;gap:2px}
-.wrow{display:flex;align-items:center;gap:8px;font-size:11.5px}
-.wrow .wl{width:86px;color:var(--muted);text-align:right;flex-shrink:0}
-.wrow .wt{flex:1;height:14px;position:relative;background:var(--surface2);border-radius:3px;overflow:hidden}
-.wrow .wt i{position:absolute;top:0;height:100%;border-radius:3px;transition:.3s}
-.wrow .wv{width:64px;font-family:var(--mono);font-size:11px;text-align:right;flex-shrink:0}
+/* 选项卡 */
+.g-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:8px}
+.g-opt{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:16px 18px;cursor:pointer;transition:.15s;text-align:left;font-family:inherit;position:relative}
+.g-opt:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 6px 18px rgba(96,165,250,.12)}
+.g-opt .g-opt-tag{position:absolute;top:12px;right:12px;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.tag-aggressive{background:rgba(248,113,113,.15);color:var(--red)}
+.tag-steady{background:rgba(52,211,153,.15);color:var(--green)}
+.tag-cautious{background:rgba(245,158,11,.15);color:var(--amber)}
+.tag-creative{background:rgba(167,139,250,.15);color:var(--purple)}
+.g-opt h4{font-size:14px;margin-bottom:8px;padding-right:56px}
+.g-opt p{font-size:12px;color:var(--muted);line-height:1.6}
 
-.sim-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:920px){.sim-grid2{grid-template-columns:1fr}}
+/* 结果页 */
+.g-result{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:0;overflow:hidden}
+.g-verdict{padding:26px 30px;text-align:center;color:#fff}
+.g-verdict .g-verdict-title{font-size:24px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+.g-verdict .g-verdict-sub{font-size:14px;opacity:.95;max-width:640px;margin:0 auto;line-height:1.7}
+.g-verdict .g-verdict-score{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:13px;background:rgba(255,255,255,.18);border-radius:12px;padding:3px 14px}
+.v-great{background:linear-gradient(135deg,#059669,#10b981)}
+.v-good{background:linear-gradient(135deg,#0d9488,#14b8a6)}
+.v-mixed{background:linear-gradient(135deg,#b45309,#f59e0b)}
+.v-bad{background:linear-gradient(135deg,#b91c1c,#ef4444)}
+.v-disaster{background:linear-gradient(135deg,#7f1d1d,#dc2626)}
+.g-result-body{padding:20px 26px}
+.g-detail{font-size:13.5px;line-height:1.8;color:var(--text);background:var(--surface2);border-radius:8px;padding:14px 18px;margin-bottom:14px}
+.g-detail b{color:var(--blue)}
+.g-changes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.g-chg{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center}
+.g-chg .l{font-size:11px;color:var(--muted)}
+.g-chg .d{font-size:13px;font-family:var(--mono);font-weight:700;margin-top:2px}
+.g-chg .d.up{color:var(--green)}
+.g-chg .d.down{color:var(--red)}
+.g-chg .n{font-size:11.5px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+.g-next-wrap{text-align:center;padding-bottom:8px}
+
+/* 结算页 */
+.g-final{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 32px}
+.g-final-head{text-align:center;margin-bottom:20px}
+.g-grade{display:inline-block;font-size:64px;font-weight:900;font-family:var(--mono);line-height:1;border-radius:16px;padding:10px 30px;margin-bottom:10px}
+.grade-S{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff}
+.grade-A{background:linear-gradient(135deg,#059669,#34d399);color:#fff}
+.grade-B{background:linear-gradient(135deg,#0284c7,#38bdf8);color:#fff}
+.grade-C{background:linear-gradient(135deg,#b45309,#fbbf24);color:#fff}
+.grade-D{background:linear-gradient(135deg,#b91c1c,#f87171);color:#fff}
+.g-final-title{font-size:18px;font-weight:700}
+.g-final-sub{font-size:13px;color:var(--muted);margin-top:4px}
+.g-final-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.g-review{margin:18px 0}
+.g-review h4{font-size:14px;margin-bottom:10px;color:var(--blue)}
+.g-rev-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:12.5px}
+.g-rev-item:last-child{border-bottom:none}
+.g-rev-badge{font-size:10px;font-weight:800;border-radius:4px;padding:2px 8px;flex-shrink:0;min-width:44px;text-align:center}
+.rb-great{background:rgba(16,185,129,.2);color:var(--green)}
+.rb-good{background:rgba(20,184,166,.2);color:#2dd4bf}
+.rb-mixed{background:rgba(245,158,11,.2);color:var(--amber)}
+.rb-bad{background:rgba(239,68,68,.2);color:var(--red)}
+.rb-disaster{background:rgba(220,38,38,.25);color:#f87171}
+.g-rev-name{flex:1}
+.g-rev-choice{color:var(--muted);font-size:11.5px}
+.g-rev-score{font-family:var(--mono);font-weight:700}
 
 footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--muted);font-size:12px}
 </style>
@@ -297,87 +340,19 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color
 
 <main class="wrap">
 
-<!-- ================= 全流程模拟器 ================= -->
+<!-- ================= 外贸决策模拟后台（关卡制） ================= -->
 <section class="panel show" id="s-sim">
-  <h2>全流程模拟器 —— 你的操作，实时影响结果</h2>
-  <p class="desc">调整左侧任一「决策参数」，右侧全链路指标立即重算：营销投入 → 流量漏斗 → 订单成交 → 平台佣金/物流 → 发票/回款 → 汇率折算 → 最终净利润 & ROI。每个数字都由同一条因果链驱动，改动任何一环，全链路联动。</p>
+  <h2>外贸业务决策模拟 —— 你来当这个外贸主管</h2>
+  <p class="desc">10 个真实业务场景，每个场景给你 4 个选项。选完立刻看到经营数据的变化和一句话点评。看看你能不能把这家公司带好。</p>
 
-  <div class="sim-layout">
-    <!-- 决策参数 -->
-    <div class="sim-side">
-      <div class="sim-card">
-        <h3>&#9312; 营销投放决策</h3>
-        <div class="ctrl-row"><label>PPC 广告日预算 <b id="lbl-ppc">$300</b></label><input type="range" id="in-ppc" min="0" max="1000" step="10" value="300"></div>
-        <div class="ctrl-row"><label>SEO/内容月投入 <b id="lbl-seo">$2,000</b></label><input type="range" id="in-seo" min="0" max="10000" step="100" value="2000"></div>
-        <div class="ctrl-row"><label>KOL 合作次数/月 <b id="lbl-kol">2</b></label><input type="range" id="in-kol" min="0" max="10" step="1" value="2"></div>
-        <div class="ctrl-row"><label>展会/季度 <b id="lbl-exh">1</b></label><input type="range" id="in-exh" min="0" max="4" step="1" value="1"></div>
-      </div>
-      <div class="sim-card">
-        <h3>&#9313; 渠道与运营决策</h3>
-        <div class="ctrl-row"><label>主投放平台</label>
-          <select id="in-plat">
-            <option value="AMZ" selected>Amazon (佣金15%)</option>
-            <option value="ALI">Alibaba (佣金8%)</option>
-            <option value="SHO">Shopify (佣金12%)</option>
-            <option value="TIK">TikTok Shop (佣金10%)</option>
-            <option value="EBA">eBay (佣金11%)</option>
-            <option value="WAL">Walmart (佣金14%)</option>
-          </select></div>
-        <div class="ctrl-row"><label>客单价策略 <b id="lbl-price">$120</b></label><input type="range" id="in-price" min="40" max="300" step="5" value="120"></div>
-        <div class="ctrl-row"><label>物流方式</label>
-          <select id="in-ship">
-            <option value="sea" selected>海运 (慢/便宜)</option>
-            <option value="air">空运 (快/贵)</option>
-            <option value="rail">中欧班列 (中)</option>
-          </select></div>
-        <div class="ctrl-row"><label>回款账期（天）<b id="lbl-terms">30</b></label><input type="range" id="in-terms" min="0" max="120" step="15" value="30"></div>
-      </div>
-      <div class="sim-card">
-        <h3>&#9314; 外部环境</h3>
-        <div class="ctrl-row"><label>结算汇率（本币→USD）<b id="lbl-fx">7.20</b></label><input type="range" id="in-fx" min="6.0" max="8.5" step="0.05" value="7.2"></div>
-        <div class="ctrl-row"><label>市场需求指数 <b id="lbl-demand">100</b></label><input type="range" id="in-demand" min="50" max="160" step="5" value="100"></div>
-        <div class="ctrl-row"><label>海运费率波动 <b id="lbl-frate">+0%</b></label><input type="range" id="in-frate" min="-30" max="80" step="5" value="0"></div>
-      </div>
-      <button class="btn primary" id="btn-sim-reset" style="width:100%">重置为基准方案</button>
-    </div>
-
-    <!-- 结果面板 -->
-    <div class="sim-main">
-      <div class="sim-kpis" id="sim-kpis"></div>
-
-      <div class="sim-card">
-        <h3>全链路因果图 —— 从投入到净利</h3>
-        <div class="sim-flow" id="sim-flow"></div>
-      </div>
-
-      <div class="sim-grid2">
-        <div class="sim-card">
-          <h3>营销漏斗（月度）</h3>
-          <div class="funnel" id="sim-funnel"></div>
-        </div>
-        <div class="sim-card">
-          <h3>单位经济模型（每单）</h3>
-          <div class="waterfall" id="sim-waterfall"></div>
-        </div>
-      </div>
-
-      <div class="sim-card">
-        <h3>现金流时间线（12 个月 · 考虑回款账期）</h3>
-        <div class="cols" id="sim-cashflow"></div>
-        <div class="flegend" style="margin-top:8px"><span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px"></span> 月净现金流 &nbsp; <span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px"></span> 回款滞后造成的负现金流 &nbsp; <b id="sim-cash-min"></b></div>
-      </div>
-
-      <div class="sim-card">
-        <h3>敏感性分析 —— 哪个参数对净利影响最大</h3>
-        <div id="sim-sensitivity"></div>
-      </div>
-
-      <div class="sim-card">
-        <h3>决策日志 —— 你的每次操作都被记录</h3>
-        <div class="engine-log" id="sim-log" style="max-height:180px;overflow:auto"><div class="log-line"><span class="log-ms">BASE</span><span>基准方案已加载</span></div></div>
-      </div>
-    </div>
+  <!-- 常驻状态栏 -->
+  <div class="g-topbar">
+    <div class="g-progress" id="g-progress">准备开始</div>
+    <div class="g-stats" id="g-stats"></div>
   </div>
+
+  <!-- 动态舞台 -->
+  <div id="g-stage"></div>
 </section>
 
 <!-- ================= 总览 ================= -->
@@ -1267,255 +1242,407 @@ function renderAll(){
   renderProv();renderOrders();renderEngine();renderQuality();
 }
 
-/* ============ 16. 全流程模拟器 ============ */
-var SIM_BASE={ppc:300,seo:2000,kol:2,exh:1,plat:"AMZ",price:120,ship:"sea",terms:30,fx:7.2,demand:100,frate:0};
-var SIM_LOG_N=0;
+/* ============ 16. 外贸业务决策模拟（关卡制） ============ */
+var BIZ_INIT={cash:50000,revenue:45000,profitRate:18,customers:120,brand:50,risk:20};
+var GAME={phase:"intro",idx:0,biz:{},history:[]};
 
-function simCalc(p){
-  /* --- 1. 营销投入（月度）--- */
-  var ppcM=p.ppc*30, seoM=p.seo, kolM=p.kol*850, exhM=p.exh*4000/3;
-  var mktSpend=ppcM+seoM+kolM+exhM;
+var VERDICTS={
+  great:{cls:"v-great",badge:"rb-great",title:"英明的决策！",label:"英明"},
+  good:{cls:"v-good",badge:"rb-good",title:"不错的选择",label:"不错"},
+  mixed:{cls:"v-mixed",badge:"rb-mixed",title:"有得有失",label:"参半"},
+  bad:{cls:"v-bad",badge:"rb-bad",title:"这一步走错了",label:"失误"},
+  disaster:{cls:"v-disaster",badge:"rb-disaster",title:"重大失误！",label:"重伤"}
+};
+var TAGS={aggressive:["tag-aggressive","激进"],steady:["tag-steady","稳健"],cautious:["tag-cautious","保守"],creative:["tag-creative","创新"]};
 
-  /* --- 2. 流量漏斗 --- */
-  /* 各渠道单位流量成本与转化效率（月度）*/
-  var ppcClicks=ppcM/1.2;                 /* PPC：$1.2/点击 */
-  var seoClicks=seoM*0.6;                 /* SEO/内容：长尾复利，$1.7/点击 */
-  var kolClicks=kolM*0.5;                 /* KOL：种草内容带量 */
-  var demandF=p.demand/100;
-  var clicks=(ppcClicks+seoClicks+kolClicks)*demandF;
-  var impressions=clicks*38;              /* 整体 CTR ≈ 2.6% */
-  var visits=clicks*0.82;                 /* 82% 点击抵达详情页 */
-  /* 平台转化率基准 */
-  var cvrBase={AMZ:0.040,ALI:0.012,SHO:0.024,TIK:0.028,EBA:0.020,WAL:0.026}[p.plat]||0.02;
-  /* 价格弹性：价格越高转化越低（对数弹性 -0.8） */
-  var priceF=Math.pow(p.price/120,-0.8);
-  var onlineOrders=Math.round(visits*cvrBase*priceF*demandF);
-  /* 展会：高意向 B2B 线索，约 30% 成交（大额订单，2.5 倍客单价） */
-  var exhLeads=exhM/18*demandF;
-  var exhOrders=Math.round(exhLeads*0.3);
-  var orders=onlineOrders+exhOrders;
+var SCENES=[
+{id:1,cat:"营销投放",title:"新品上市，$15,000 推广预算怎么花？",
+ bg:"公司新品「降噪耳机 Pro」上架 Amazon 美国站，定价 $89.99。你手里有 $15,000 首月推广预算。类目头部卖家月销 20,000+，你目前排在第 300 名开外。<span class='g-data'>毛利率 38% · 类目平均转化率 3.2% · PPC 平均 CPC $1.4</span>",
+ opts:[
+  {tag:"aggressive",title:"全押 PPC，冲排名",desc:"$15,000 全部投站内广告，目标首月冲进类目前 50。",
+   detail:"首月烧完全部预算，ACoS 高达 65%，靠广告出单 1,850 件冲到类目第 42 名，自然流量占比升至 35%。当月广告订单小幅亏损，但排名带来的自然单让第二个月开始盈利。",
+   verdict:"mixed",score:72,comment:"排名是冲上去了，但当月账面确实难看——烧钱买排名，赌的是下个月的免费流量。",
+   effect:{cash:-15000,revenue:16500,profitRate:-6,customers:160,brand:8,risk:5}},
+  {tag:"steady",title:"60% PPC + 40% KOL 种草",desc:"$9,000 投广告，$6,000 找 3 个中腰部科技博主做开箱测评。",
+   detail:"3 条测评视频总播放 42 万，带来 2,600 次站外引流，整体转化率提升到 3.8%。首月出单 1,420 件，综合 ROAS 3.1，当月打平微赚，测评视频还成了长期品牌资产。",
+   verdict:"great",score:92,comment:"教科书级的新品推广——广告冲量 + 内容种草两条腿走路，当月打平，还顺手攒下了品牌内容资产。",
+   effect:{cash:-15000,revenue:19200,profitRate:1,customers:130,brand:12,risk:0}},
+  {tag:"cautious",title:"只做 SEO 和站内优化",desc:"预算控制在 $5,000 以内：Listing 优化 + A+ 页面 + 秒杀报名。",
+   detail:"实际只花了 $4,800。首月出单 680 件，排名爬到第 180 名。省下了 $10,000 现金，但错失了新品期 30 天的流量扶持——这个排名想爬到前 50，后续要花双倍的钱。",
+   verdict:"bad",score:48,comment:"钱是省下了，但新品期的流量红利一去不返——排名 180 的坑，得用双倍的预算才能填上。",
+   effect:{cash:-4800,revenue:9200,profitRate:2,customers:55,brand:2,risk:-5}},
+  {tag:"creative",title:"CPS 纯佣模式找网红",desc:"不预付现金，给 15% 佣金挂链接，谈成的都是小网红。",
+   detail:"谈成了 7 个小网红，但头部博主全部拒绝纯佣合作。首月出单 940 件，佣金支出 $5,800。量不大，排名没动，品牌也没溅起水花。",
+   verdict:"mixed",score:65,comment:"零成本带货听着很美，但能谈成的都是小号——940 单不痛不痒，白忙一场。",
+   effect:{cash:-5800,revenue:11800,profitRate:2,customers:80,brand:3,risk:-2}}
+ ]},
+{id:2,cat:"平台活动",title:"Prime Day 大促，报不报秒杀？",
+ bg:"Amazon Prime Day 报名截止在即。去年你参加大促，2 天卖了 $23,000（平时日均 $1,500）。今年备货资金充裕，但仓库里还压着上季度的滞销品。<span class='g-data'>去年大促 2 天销量 = 平时 15 天 · 平台要求折扣 ≥ 20% 才能报秒杀 · 大促流量约平时 8 倍</span>",
+ opts:[
+  {tag:"aggressive",title:"全力参加，3 倍备货，报 30% 折扣",desc:"冲一波大的，目标 2 天 $60,000+。",
+   detail:"大促 2 天爆卖 $67,000！但 30% 折扣 + 15% 佣金 + 物流，净利率只剩 4%。1,800 单里有 11% 退货。算总账：赚了 $2,700 现金，但 BSR 排名冲进类目前 20，后续自然流量大涨，顺手清掉了大量库存。",
+   verdict:"good",score:82,comment:"大促就是拿利润换流量——2 天只赚 $2,700 不算多，但类目前 20 的排名，够你吃三个月。",
+   effect:{cash:2700,revenue:67000,profitRate:-5,customers:210,brand:10,risk:8}},
+  {tag:"steady",title:"参加，报 20% 折扣，备货 1.5 倍",desc:"不贪，按去年增速的 1.5 倍备货。",
+   detail:"大促 2 天卖了 $38,000，净利率保住 9%，实赚 $3,400。库存消耗过半，没爆仓也没断货，排名升到第 65 名。这是全年最省心的一仗。",
+   verdict:"great",score:88,comment:"不贪不慌，利润和流量都拿到了——这才是普通人学得会的大促打法。",
+   effect:{cash:3400,revenue:38000,profitRate:1,customers:150,brand:6,risk:2}},
+  {tag:"creative",title:"不报秒杀，大促期间做站外 Deal",desc:"在 Slickdeals 等折扣站发 15% off 专属码。",
+   detail:"站外引流 8,200 次，成交 $19,000，不用付平台秒杀费，净利率 12%，赚了 $2,280。但眼睁睁看着大促流量被同行吃掉，BSR 排名掉出前 100。",
+   verdict:"mixed",score:62,comment:"单看利润你赚了，赚得还挺聪明；但排名被同行反超这个隐形成本，账面上可看不见。",
+   effect:{cash:2280,revenue:19000,profitRate:3,customers:90,brand:1,risk:-3}},
+  {tag:"cautious",title:"不参加，趁机 5 折清滞销库存",desc:"大促期间全场清仓，回笼资金。",
+   detail:"5 折清仓回笼 $12,000 现金，清掉 70% 积压。但热销品也跟着错过了大促，整体排名掉到第 140 名，得不偿失。",
+   verdict:"bad",score:50,comment:"滞销是清了，但拿热销品的排名给滞销品陪葬——捡了芝麻，丢了西瓜。",
+   effect:{cash:12000,revenue:12000,profitRate:-2,customers:30,brand:-5,risk:-8}}
+ ]},
+{id:3,cat:"价格竞争",title:"竞品突然降价 25%，跟不跟？",
+ bg:"类目第 3 的竞品突然全系降价 25%，同款比你便宜 $17。一周内你的销量掉了 18%，广告转化率从 3.5% 掉到 2.6%。对方是有自有工厂的工厂店。<span class='g-data'>你当前售价 $89.99 · 毛利率 38% · 月销 2,100 件</span>",
+ opts:[
+  {tag:"aggressive",title:"跟进降价 25%，正面硬刚",desc:"价格跟平，保住销量。",
+   detail:"价格跟平后销量确实恢复了，但毛利率从 38% 被压到 14%。对方是工厂直营，成本比你低 20%，扛了两个月你先扛不住，只能涨回原价——销量又掉了一轮。",
+   verdict:"bad",score:42,comment:"和工厂店拼价格是拿短板打人家长板——两个月亏掉 $34,000 利润，最后还得灰溜溜涨回去。",
+   effect:{cash:-34000,revenue:6000,profitRate:-24,customers:40,brand:-6,risk:18}},
+  {tag:"steady",title:"降 10% + 送 $12 配件包",desc:"用赠品缩小实际价差，守住价格带。",
+   detail:"实际到手价差缩小到 $8，赠品让转化率回升到 3.3%。毛利率降到 26%，月利润 $18,000。最关键的是：你始终没跌出主价格带，品牌调性保住了。",
+   verdict:"good",score:80,comment:"用赠品代替直接降价，既守住了价格带又稳住了销量——高情商的价格战打法。",
+   effect:{cash:-12000,revenue:2000,profitRate:-12,customers:25,brand:2,risk:5}},
+  {tag:"creative",title:"不降价，打广告强调「原装进口芯片」",desc:"差异化卖点对冲价格劣势。",
+   detail:"广告文案全部改为强调降噪芯片和做工，CPC 涨了 15% 但转化率拉回 3.1%。销量恢复 85%，月利润 $24,000。三个月后竞品自己涨回了原价，你的排名反升 5 位。",
+   verdict:"great",score:90,comment:"价格战最好的应对是不接招——你用差异化守住了利润，还等到了对手先绷不住的那一天。",
+   effect:{cash:-4000,revenue:-3000,profitRate:-4,customers:-15,brand:10,risk:3}},
+  {tag:"creative",title:"推出简配版 Lite，定价 $64.99",desc:"砍掉无线充电和多点连接，用产品线分层接住价格敏感用户。",
+   detail:"开模具花了 $8,000，Lite 版上市首月卖出 1,100 件，毛利率 22%。高端版销量几乎没受影响，产品线完成高低分层——竞品的降价打在了空处。",
+   verdict:"good",score:78,comment:"用产品分层化解价格战，思路完全正确——就是 $8,000 模具费让这个月的账有点难看。",
+   effect:{cash:-8000,revenue:14000,profitRate:-6,customers:110,brand:4,risk:6}}
+ ]},
+{id:4,cat:"物流决策",title:"红海危机，海运费暴涨 3 倍",
+ bg:"红海航线受阻，上海→鹿特丹海运费从 $2,800/柜涨到 $8,400/柜。你有一批 $120,000 的货原定下周出，欧洲客户等着 45 天后上架。<span class='g-data'>海运费占货值 7% → 涨后 21% · 空运费率约海运 8 倍 · 中欧班列费率 3 倍但时效只慢 10 天</span>",
+ opts:[
+  {tag:"cautious",title:"等运费回落再发货",desc:"宁可晚点，不多花冤枉钱。",
+   detail:"等了 5 周运费才回落到 $4,600，省下 $3,800。但欧洲仓库断货 3 周，错过当地促销季，损失销售额 $28,000，还有 2 个 B2B 客户转投了有现货的同行。",
+   verdict:"bad",score:40,comment:"省了 $3,800 运费，赔了 $28,000 销售额外加 2 个客户——这笔账怎么算都是亏的。",
+   effect:{cash:-3800,revenue:-28000,profitRate:-3,customers:-8,brand:-4,risk:-10}},
+  {tag:"steady",title:"改走中欧班列",desc:"费率只有峰值海运的 74%，时效还快 3 天。",
+   detail:"班列运费 $6,200，比峰值海运省 $2,200，22 天时效比海运还快 3 天。货物准时到仓赶上促销季，客户完全无感。唯一的问题：班列舱位紧张，之后两个月每周只有 1/3 的货能上去。",
+   verdict:"good",score:82,comment:"中欧班列是这场危机里的最优解——又省钱又快，唯一的问题就是舱位得靠抢。",
+   effect:{cash:-6200,revenue:4000,profitRate:-1,customers:0,brand:2,risk:2}},
+  {tag:"creative",title:"空运 20% 热销品 + 海运 80% 长尾品",desc:"分级物流：爆款用空运保排名，长尾品等运费回落。",
+   detail:"热销 SKU 空运花了 $9,600 抢先铺货，bestseller 排名全程没断；长尾 SKU 等到运费回落后海运。总物流成本 $11,200，但热销品排名全保住了，当月多赚 $9,000 销售额。",
+   verdict:"good",score:79,comment:"分级物流玩得溜——热销品空运保排名、长尾品海运省成本，就是物流费单看确实贵了点。",
+   effect:{cash:-11200,revenue:9000,profitRate:-2,customers:12,brand:3,risk:0}},
+  {tag:"cautious",title:"涨价 8%，把成本转嫁给客户",desc:"发涨价函，让客户消化运费。",
+   detail:"B2B 客户 60% 接受了涨价，40% 要求重新比价，其中 1 个年采购 $80,000 的大客户直接流失。B2C 端涨价后转化率掉了 9%。整体收入略降，利润勉强持平。",
+   verdict:"mixed",score:58,comment:"转嫁成本天经地义，但你涨得比同行快——丢的那个大客户，一年值 $80,000。",
+   effect:{cash:-2000,revenue:-6000,profitRate:3,customers:-5,brand:-2,risk:4}}
+ ]},
+{id:5,cat:"财务风控",title:"大客户 $200,000 订单，要 90 天账期",
+ bg:"德国连锁零售商 Mueller 想下 $200,000 年度框架订单，但财务坚持 90 天账期（你的标准条款是 30 天）。吃下这单，全年营收目标就完成了 40%。<span class='g-data'>客户信用评级 AA · 你的运营资金 $180,000 · 90 天账期资金占用约 $120,000</span>",
+ opts:[
+  {tag:"steady",title:"接单，同时买出口信用保险",desc:"保费约货值 1.6%，中信保承保 90%。",
+   detail:"保费 $3,200，中信保承保应收账款 90%。货按时发出，90 天后 Mueller 准时付款。资金缺口用银行订单贷解决了 70%，利息 $2,800。这单净赚 $21,000，还锁定了年度框架协议。",
+   verdict:"great",score:91,comment:"大单 + 保险 + 订单贷——风险、资金、利润三件事全安排明白了，这就是专业外贸财务的标准操作。",
+   effect:{cash:21000,revenue:200000,profitRate:-1,customers:1,brand:6,risk:3}},
+  {tag:"aggressive",title:"接单，不买保险，赌客户信用",desc:"省下 $3,200 保费，AA 评级怕什么。",
+   detail:"Mueller 确实是 AA 评级，90 天后也确实全额付款了，净赚 $24,200。但期间你的运营资金一度只剩 $42,000——这单赌赢了，纯属客户争气。",
+   verdict:"mixed",score:60,comment:"这次是赌赢了，多赚 $3,200；但运营资金见底的这两个月，你睡觉都不踏实。",
+   effect:{cash:24200,revenue:200000,profitRate:0,customers:1,brand:3,risk:25}},
+  {tag:"cautious",title:"拒绝，坚持 30 天账期",desc:"条款不能破，现金流第一。",
+   detail:"谈判破裂，Mueller 转投了愿意给账期的竞争对手。更糟的是你在德国采购圈落了个「账期死板」的名声——之后两个潜在客户询盘时，问了账期就没下文了。",
+   verdict:"disaster",score:38,comment:"国际贸易里账期就是通行证——你守住了条款，丢掉的是整个欧洲连锁渠道的门票。",
+   effect:{cash:0,revenue:-200000,profitRate:2,customers:-1,brand:-8,risk:-5}},
+  {tag:"creative",title:"各让一步：60 天账期 + 3% 早付折扣",desc:"30 天内付款享 3% 折扣，把选择权交给客户。",
+   detail:"Mueller 财务算完账选了 30 天付款拿折扣：你 $194,000 早 60 天回款，资金成本省了 $5,800，少收的 $6,000 折扣刚好对冲。客户拿到了折扣，你拿到了现金，双赢。",
+   verdict:"good",score:85,comment:"「早付折扣」这招漂亮——客户主动提前付款，你的现金流问题就这么无声无息地化解了。",
+   effect:{cash:18800,revenue:194000,profitRate:1,customers:1,brand:5,risk:-2}}
+ ]},
+{id:6,cat:"汇率管理",title:"人民币要升值，10 万美元回款锁不锁汇？",
+ bg:"你有一笔 $100,000 货款 30 天后回款。市场普遍预期人民币将从 7.20 升值到 7.05。按 7.20 结汇是 ¥720,000，按 7.05 只有 ¥705,000——差 ¥15,000。<span class='g-data'>银行远期结汇锁定价 7.16 · 期权费 0.5%（约 ¥3,580）· 你的成本 60% 是人民币计价</span>",
+ opts:[
+  {tag:"steady",title:"立刻做远期结汇，锁定 7.16",desc:"锁死了，涨跌都与我无关。",
+   detail:"锁汇后人民币果然升值到 7.03。你按 7.16 结汇拿到 ¥716,000，比不锁汇多赚 ¥13,000。锁定收益，夜夜安睡。",
+   verdict:"great",score:90,comment:"锁汇不是让你赚最多，是让你睡最稳——该赚的一分没少，还白捡 ¥13,000。",
+   effect:{cash:1800,revenue:0,profitRate:2,customers:0,brand:0,risk:-12}},
+  {tag:"creative",title:"买外汇期权，保留双向可能",desc:"花 ¥3,580 买个选择权。",
+   detail:"花 ¥3,580 买入看跌期权。人民币真升值到 7.03——但你发现不行权反而更亏（期权作废损失权利金），按即期 7.03 结汇拿到 ¥703,000。方向看对了，工具选错了。",
+   verdict:"mixed",score:55,comment:"期权是给「不确定」上保险，不是拿来赌方向——这次方向对了工具错了，白扔 ¥3,580。",
+   effect:{cash:-500,revenue:0,profitRate:0,customers:0,brand:0,risk:-5}},
+  {tag:"aggressive",title:"不锁汇，赌人民币不会升值",desc:"哪有那么巧，涨就涨呗。",
+   detail:"人民币如预期升值到 7.03，你少收 ¥17,000——相当于白干一周。更糟的是下个月你还有 $150,000 应收，你开始后悔没早点建立套保制度。",
+   verdict:"disaster",score:35,comment:"外贸 8% 的净利率，经不起 2% 的汇率波动反复折腾——这一次就吃掉了四分之一利润。",
+   effect:{cash:-2400,revenue:0,profitRate:-3,customers:0,brand:0,risk:15}},
+  {tag:"creative",title:"给客户 2% 早付折扣，10 天内付款",desc:"让客户提前付，汇率风险自然消失。",
+   detail:"客户提前 20 天付款，你按 7.18 结汇，比 30 天后的 7.03 多收 ¥12,300。但 $2,000 折扣成本合 ¥14,400——净亏 ¥2,100。而且客户尝到甜头，以后每单都要砍早付折扣。",
+   verdict:"mixed",score:52,comment:"用让利换时间的思路没错，但 2% 折扣给多了——这个汇率行情下，等于花钱买了个教训。",
+   effect:{cash:-300,revenue:0,profitRate:-1,customers:1,brand:0,risk:-3}}
+ ]},
+{id:7,cat:"红人营销",title:"TikTok 网红开价 $5,000 一条视频",
+ bg:"一个 50 万粉的美国科技博主开价 $5,000 一条开箱视频。他上一条蓝牙音箱的带货视频卖了 1,300 单。但他只接受「全款 $5,000」或「底价 $3,000 + 8% 佣金」两种模式。<span class='g-data'>他视频平均播放 28 万 · 你的耳机客单价 $89.99 · 毛利率 38%</span>",
+ opts:[
+  {tag:"aggressive",title:"全款 $5,000 签下来",desc:"赌他这条视频能爆。",
+   detail:"视频爆了！播放 71 万（超出他均值 2.5 倍），出单 2,340 件，销售额 $210,000。TikTok 小店直接卖空，被迫紧急补货。$5,000 换 $210,000，本年度最佳投资，没有之一。",
+   verdict:"great",score:93,comment:"爆款可遇不可求——这条视频的投资回报率 42 倍，直接把小店卖断货，甜蜜的烦恼。",
+   effect:{cash:74000,revenue:210000,profitRate:3,customers:420,brand:18,risk:2}},
+  {tag:"steady",title:"CPS 模式：底价 $3,000 + 8% 佣金",desc:"风险共担，视频扑了损失也有限。",
+   detail:"视频播放 24 万（他的正常水平），出单 890 件，销售额 $80,000。总成本 = 底价 $3,000 + 佣金 $6,400 = $9,400。比全款多花 $4,400，换来了下限保障。",
+   verdict:"good",score:76,comment:"CPS 把风险分给了网红——多花 $4,400 买个安心，这个量级下是划算的。",
+   effect:{cash:20900,revenue:80000,profitRate:1,customers:190,brand:9,risk:-2}},
+  {tag:"creative",title:"不找大 V，签 5 个 10 万粉小 V 各 $800",desc:"分散投放，总成本才 $4,000。",
+   detail:"5 条视频总播放 96 万——是那个大 V 单条视频的 3.4 倍。出单 1,650 件，总成本 $4,000。小 V 报价低、配合度高、粉丝黏性强，还全愿意挂小黄车。",
+   verdict:"good",score:84,comment:"5 个小 V 的总播放吊打 1 个大 V，成本还低 20%——分散投放才是 TikTok 的正确打开方式。",
+   effect:{cash:52000,revenue:148000,profitRate:2,customers:310,brand:11,risk:-3}},
+  {tag:"cautious",title:"不投网红，自己拍短视频",desc:"运营自己上手，零成本。",
+   detail:"运营小妹用手机拍了 20 条短视频。最好的一条播放 12,000，总共出单 86 件。账号涨粉 3,200 后就停滞了——专业博主的 71 万播放和你的 12,000 播放之间，隔着内容工业化的差距。",
+   verdict:"bad",score:45,comment:"自媒体不是零成本，是零门槛——省下 $5,000，也错过了这波流量，账号还做死了。",
+   effect:{cash:2900,revenue:7700,profitRate:0,customers:25,brand:1,risk:-5}}
+ ]},
+{id:8,cat:"库存管理",title:"仓库压了 $80,000 滞销库存，怎么办？",
+ bg:"上季度对一款老品备货过多，现在仓库压着 $80,000 的货（4,200 件，按成本计）。仓储费每月 $3,000，该品月销只有 350 件——照这个速度，卖完要 12 个月。<span class='g-data'>该品当前售价 $39.99 · 单件成本 $19 · 仓储费 $3,000/月 · 资金年化成本 8%</span>",
+ opts:[
+  {tag:"aggressive",title:"5 折清仓，一步到位",desc:"降到 $19.99 疯狂甩卖。",
+   detail:"6 周清完 4,200 件，回笼 $84,000 现金（售价刚好覆盖成本）。算上省下的 11 个月仓储费 $33,000 和资金占用成本，实际止损 $21,000。现金流立刻健康，可以投新品。",
+   verdict:"good",score:80,comment:"止损要快——回笼 $84,000 现金 + 省下 $33,000 仓储费，比拖着卖 12 个月划算太多。",
+   effect:{cash:84000,revenue:84000,profitRate:-4,customers:280,brand:-3,risk:-15}},
+  {tag:"creative",title:"和热销新品捆绑买赠",desc:"「买新品耳机，送老品」的 bundle。",
+   detail:"捆绑套餐 3 个月带动新品多卖 1,900 单，老品同步消化 1,900 件。剩下 2,300 件继续慢慢卖。算上新品的增量利润，整体反而多赚 $18,000——滞销品变成了营销资源。",
+   verdict:"great",score:89,comment:"用滞销品当赠品撬动热销品销量——库存问题变成了营销弹药，这操作值得写进公司 SOP。",
+   effect:{cash:62000,revenue:132000,profitRate:2,customers:260,brand:5,risk:-8}},
+  {tag:"cautious",title:"开拓拉美新市场慢慢消化",desc:"入驻美客多，同款产品换个市场卖。",
+   detail:"老品在拉美定价 $34.99（当地竞品少），5 个月消化 2,600 件，毛利率 32%。新市场前期投入（认证、Listing、物流）$7,500，净赚 $9,200——顺便多开了一个能复用的市场。",
+   verdict:"good",score:77,comment:"滞销品换个市场就是新品——虽然前期花了 $7,500，但拉美渠道以后还能接着用。",
+   effect:{cash:9200,revenue:91000,profitRate:1,customers:140,brand:4,risk:-5}},
+  {tag:"cautious",title:"找线下批发商打包出货",desc:"B2B 一次性接盘。",
+   detail:"一个中东批发商接盘 3,000 件，单价 $16（成本价的 84%），回笼 $48,000。剩下 1,200 件线上慢慢卖。回血快，但每件亏 $3——批发生意的砍价刀法比你想象的狠。",
+   verdict:"mixed",score:58,comment:"B2B 清货快是快，但 $16/件等于割肉离场——回血 $48,000 的代价，是承认这笔备货决策错了。",
+   effect:{cash:48000,revenue:48000,profitRate:-6,customers:3,brand:-2,risk:-10}}
+ ]},
+{id:9,cat:"平台战略",title:"增长见顶，要不要拓新平台？",
+ bg:"你在 Amazon 的营收连续 3 个月停在 $130,000/月，类目 TOP 10 全是资本加持的大卖。手里有 $60,000 可动用资金和一个 5 人小团队。<span class='g-data'>Amazon 占你营收 85% · TikTok Shop 美区年增长 250% · Walmart 卖家数仅 Amazon 的 1/8 · 独立站获客成本是平台 2.3 倍</span>",
+ opts:[
+  {tag:"aggressive",title:"All in TikTok Shop，赶直播风口",desc:"组直播小组 + 达人分销，全力押注。",
+   detail:"前 3 个月烧掉 $42,000（样品、投流、坑位费），第 4 个月单月 GMV 突破 $55,000——吃到红利了。但 5 人团队被抽走 2 个，Amazon 主业排名微跌，得尽快补人。",
+   verdict:"good",score:81,comment:"风口上确实飞起来了——4 个月做到 $55,000 单月 GMV，代价是主业分了心，团队得马上扩。",
+   effect:{cash:-42000,revenue:55000,profitRate:-2,customers:380,brand:14,risk:10}},
+  {tag:"steady",title:"入驻 Walmart Marketplace",desc:"竞争小、客群重合度高，Listing 直接复制。",
+   detail:"迁移成本只花了 $9,000。前 2 个月 $18,000/月，第 6 个月稳定在 $41,000/月。沃尔玛买家客单价高、退货率低，是很舒服的第二曲线。",
+   verdict:"great",score:88,comment:"同样的货换个货架卖——Walmart 竞争小、利润稳，第二曲线就该这么开。",
+   effect:{cash:-9000,revenue:41000,profitRate:2,customers:170,brand:6,risk:-3}},
+  {tag:"creative",title:"建 Shopify 独立站，沉淀私域",desc:"长期主义，把用户攥在自己手里。",
+   detail:"建站 + 投流 6 个月烧了 $55,000，月销才 $12,000，获客成本是 Amazon 的 2.8 倍。但攒下 8,400 个邮箱订阅用户，复购率 31%——第二年独立站开始盈利。这是唯一「资产归自己」的渠道。",
+   verdict:"mixed",score:64,comment:"独立站是长跑不是短跑——6 个月 $55,000 换 8,400 个私域用户，这笔账要到第二年才算得赢。",
+   effect:{cash:-55000,revenue:12000,profitRate:-5,customers:95,brand:12,risk:12}},
+  {tag:"cautious",title:"不拓平台，深耕 Amazon 做精品",desc:"把 $60,000 全投产品升级。",
+   detail:"模具改款 + 认证 + A+ 内容重做，老品评分从 4.3 拉到 4.6，转化率提升 18%，月销爬到 $152,000。基本盘稳了，但对 Amazon 的依赖度升到 92%。",
+   verdict:"mixed",score:63,comment:"把一件事做到极致没错，但 92% 营收押在一个平台——哪天平台改个规则，你就是没穿泳裤的退潮者。",
+   effect:{cash:-60000,revenue:22000,profitRate:3,customers:40,brand:8,risk:18}}
+ ]},
+{id:10,cat:"供应链",title:"Q4 旺季备货，备多少？",
+ bg:"黑五网诞 + 圣诞季将至。去年 Q4 你卖了 $310,000（占全年 38%）。今年新品表现好，平台流量也在涨。工厂提醒：11 月后产能优先保大客户，这是你唯一的备货窗口。<span class='g-data'>当前月销 $160,000 · 去年 Q4 环比增长 210% · 工厂账期 45 天 · 旺季断货损失约 $90,000/周</span>",
+ opts:[
+  {tag:"aggressive",title:"备 3 倍货，赌爆单",desc:"黑五这么大的流量，备少了就是把钱往外推。",
+   detail:"备货 $480,000。黑五当天卖了 $71,000——单日纪录！但圣诞后需求跳水，1 月底剩 $96,000 库存压仓，Q1 仓储费 + 资金成本吃掉 $11,000。全年算账：旺季多赚 $54,000，但那 $96,000 库存要卖到明年 Q2。",
+   verdict:"mixed",score:68,comment:"爆单是真爆了，备多了也是真多了——$54,000 利润背后压着 $96,000 库存，现金流绷得像琴弦。",
+   effect:{cash:43000,revenue:540000,profitRate:-3,customers:650,brand:12,risk:20}},
+  {tag:"steady",title:"备 1.8 倍，参考去年增速",desc:"按去年增长节奏推算，留一点余量。",
+   detail:"备货 $288,000。黑五网诞全程畅销，12 月 20 日热销色断货 5 天（少赚 $14,000），但整体售罄率 91%，库存干干净净过完年。Q4 净利润 $86,000——全年最漂亮的一个季度。",
+   verdict:"great",score:90,comment:"91% 售罄率 + 断货只损失 $14,000——教科书级备货，钱赚了，库存还没留尾巴。",
+   effect:{cash:86000,revenue:420000,profitRate:4,customers:520,brand:8,risk:2}},
+  {tag:"cautious",title:"备 1.2 倍，边卖边补",desc:"小步快跑，看数据说话。",
+   detail:"备货 $192,000。黑五爆单后 4 天内紧急追单——工厂加价 12% 且 18 天才交货，错过网诞高峰。旺季少赚 $38,000，但库存零压力，现金充裕。",
+   verdict:"bad",score:47,comment:"边卖边补听着稳，但旺季供应链是抢跑游戏——等你反应过来，工厂产能和黄金档期都没了。",
+   effect:{cash:52000,revenue:310000,profitRate:1,customers:350,brand:2,risk:-8}},
+  {tag:"creative",title:"小批量多批次，柔性供应链",desc:"和工厂谈「每周滚动补货」，单价贵 6% 但零库存压力。",
+   detail:"每周小批量滚动补货，黑五爆单时周补货机制顶住了——整个 Q4 没断货也没压货，净利润 $71,000。这个模式后来成了公司的标准打法。",
+   verdict:"good",score:84,comment:"贵 6% 的单价，买到「永不压货 + 永不断货」——柔性供应链是贵出来的竞争力。",
+   effect:{cash:71000,revenue:390000,profitRate:2,customers:480,brand:6,risk:-12}}
+ ]}
+];
 
-  /* --- 3. 交易层（展会订单客单价为线上 2.5 倍）--- */
-  var exhRev=exhOrders*p.price*2.5;
-  var onlineRev=onlineOrders*p.price;
-  var revenue=onlineRev+exhRev;
-  var aov=orders>0?revenue/orders:0;
+/* ---- 工具 ---- */
+function gMoney(n){return(n<0?"-$":"$")+Math.abs(Math.round(n)).toLocaleString("en-US")}
+function gInt(n){return Math.round(n).toLocaleString("en-US")}
+function gApplyEffect(biz,ef){
+  biz.cash+=ef.cash;biz.revenue=Math.max(0,biz.revenue+ef.revenue);
+  biz.profitRate=Math.max(-30,Math.min(60,biz.profitRate+ef.profitRate));
+  biz.customers=Math.max(0,biz.customers+ef.customers);
+  biz.brand=Math.max(0,Math.min(100,biz.brand+ef.brand));
+  biz.risk=Math.max(0,Math.min(100,biz.risk+ef.risk));
+}
 
-  /* --- 4. 平台佣金（展会订单走线下，无佣金）--- */
-  var platFee={AMZ:0.15,ALI:0.08,SHO:0.12,TIK:0.10,EBA:0.11,WAL:0.14}[p.plat]||0.12;
-  var commission=onlineRev*platFee;
+/* ---- 顶部状态栏 ---- */
+function gRenderTopbar(){
+  var b=GAME.biz;
+  var prog=GAME.phase==="intro"?"准备开始":
+    GAME.phase==="final"?"已结算 · 10/10":
+    "决策 "+(GAME.idx+1)+" / "+SCENES.length;
+  el("g-progress").textContent=prog;
+  function st(label,val,cls){return '<span class="gstat">'+label+'<b class="'+(cls||"")+'">'+val+'</b></span>'}
+  el("g-stats").innerHTML=
+    st("现金流",gMoney(b.cash),b.cash<20000?"bad":b.cash<40000?"warn":"")+
+    st("月营收",gMoney(b.revenue))+
+    st("净利率",Math.round(b.profitRate)+"%",b.profitRate<8?"bad":b.profitRate<15?"warn":"")+
+    st("客户数",gInt(b.customers))+
+    st("品牌力",Math.round(b.brand)+"/100")+
+    st("风险指数",Math.round(b.risk)+"/100",b.risk>60?"bad":b.risk>40?"warn":"");
+}
 
-  /* --- 5. 物流 --- */
-  var shipCfg={sea:{rate:0.08,days:32},air:{rate:0.24,days:7},rail:{rate:0.12,days:18}}[p.ship]||{rate:0.08,days:32};
-  var freight=revenue*shipCfg.rate*(1+p.frate/100);
+/* ---- 开场页 ---- */
+function gRenderIntro(){
+  GAME.phase="intro";
+  el("g-stage").innerHTML=
+  '<div class="g-intro">'+
+    '<h3>你接手了一家外贸公司</h3>'+
+    '<div class="g-story">深圳某消费电子外贸公司，主营<b>降噪蓝牙耳机</b>，Amazon 美国站为主战场，年出口额 <b>$540 万</b>。<br>'+
+    '你是新上任的<b>跨境电商运营主管</b>。接下来一年，你会遇到 <b>10 个真实业务决策场景</b>——投放预算、平台大促、价格战、物流危机、账期谈判、汇率波动、红人营销、库存积压、平台扩张、旺季备货。<br>'+
+    '每个场景 4 个选项，没有标准答案，只有<b>结果和代价</b>。你的每一个决定都会真实改变这家公司的现金流、营收、利润、客户和品牌。<br>'+
+    '<b>看看一年后，你把公司带到了什么位置。</b></div>'+
+    '<div class="g-init-stats">'+
+      '<span>现金流<b>$50,000</b></span>'+
+      '<span>月营收<b>$45,000</b></span>'+
+      '<span>净利率<b>18%</b></span>'+
+      '<span>客户数<b>120</b></span>'+
+      '<span>品牌力<b>50/100</b></span>'+
+      '<span>风险指数<b>20/100</b></span>'+
+    '</div>'+
+    '<button class="g-btn" data-act="start">开始经营 &rarr;</button>'+
+  '</div>';
+  gRenderTopbar();
+}
 
-  /* --- 6. 成本结构（产品成本约 38%）--- */
-  var cogs=revenue*0.38;
-  var otherOpex=revenue*0.06; /* 人工/包装/退货 */
+/* ---- 场景页 ---- */
+function gRenderScene(){
+  GAME.phase="scene";
+  var s=SCENES[GAME.idx];
+  var opts=s.opts.map(function(o,i){
+    var tg=TAGS[o.tag];
+    return '<button class="g-opt" data-act="opt" data-i="'+i+'">'+
+      '<span class="g-opt-tag '+tg[0]+'">'+tg[1]+'</span>'+
+      '<h4>'+o.title+'</h4><p>'+o.desc+'</p></button>';
+  }).join("");
+  el("g-stage").innerHTML=
+  '<div class="g-scene">'+
+    '<div class="g-scene-head"><span class="g-scene-num">场景 '+s.id+'</span><span class="g-scene-cat">'+s.cat+'</span></div>'+
+    '<h3>'+s.title+'</h3>'+
+    '<div class="g-scene-body">'+s.bg+'</div>'+
+    '<div class="g-ask">你要怎么选？</div>'+
+    '<div class="g-opts">'+opts+'</div>'+
+  '</div>';
+  gRenderTopbar();
+}
 
-  /* --- 7. 汇率影响（本币计价的成本占 55%）--- */
-  var localCost=(cogs+freight*0.3+otherOpex)*0.55;
-  var fxLoss=localCost*(1-7.2/p.fx); /* 本币升值（fx 变小）则亏损 */
-
-  /* --- 8. 回款账期 → 现金流滞后 */
-  var termsMonths=p.terms/30;
-  /* 12 个月现金流模拟：第 m 月的现金流出当月发生，回款滞后 termsMonths */
-  var cashArr=[],cum=0;
-  for(var m=0;m<12;m++){
-    var outM=mktSpend+cogs/12*12/12; /* 简化：月均成本 */
-    var inM=(m>=termsMonths)?revenue/12:0;
-    var netM=inM-(mktSpend+(cogs+freight+otherOpex)/12);
-    cashArr.push(netM);cum+=netM;
+/* ---- 选择 → 结果页 ---- */
+function gChoose(i){
+  if(GAME.phase!=="scene")return;
+  var s=SCENES[GAME.idx];
+  var o=s.opts[i];
+  gApplyEffect(GAME.biz,o.effect);
+  GAME.history.push({scene:s.title,choice:o.title,verdict:o.verdict,score:o.score});
+  GAME.phase="result";
+  var v=VERDICTS[o.verdict];
+  function chg(label,delta,now,fmt,invert){
+    var d=delta>0?"up":delta<0?"down":"";
+    if(invert){d=delta>0?"down":delta<0?"up":""}
+    var sign=delta>0?"+":delta<0?"-":"";
+    return '<div class="g-chg"><div class="l">'+label+'</div>'+
+      '<div class="d '+d+'">'+sign+fmt(Math.abs(delta))+'</div>'+
+      '<div class="n">现在 '+fmt(now)+'</div></div>';
   }
-
-  /* --- 9. 最终损益 --- */
-  var grossProfit=revenue-cogs;
-  var netProfit=revenue-commission-freight-cogs-otherOpex-mktSpend-fxLoss;
-  var roas=mktSpend>0?revenue/mktSpend:0;
-  var roi=mktSpend>0?netProfit/mktSpend:0;
-  var contribution=revenue-cogs-commission-freight-otherOpex; /* 贡献毛利（不含营销） */
-
-  return {mktSpend:mktSpend,ppcM:ppcM,seoM:seoM,kolM:kolM,exhM:exhM,
-    impressions:impressions,clicks:clicks,visits:visits,orders:orders,
-    onlineOrders:onlineOrders,exhOrders:exhOrders,
-    revenue:revenue,aov:aov,commission:commission,commissionRate:platFee,
-    freight:freight,cogs:cogs,otherOpex:otherOpex,fxLoss:fxLoss,
-    netProfit:netProfit,grossProfit:grossProfit,contribution:contribution,
-    roas:roas,roi:roi,perOrderProfit:orders>0?netProfit/orders:0,
-    cashArr:cashArr,cumCash:cum,termsMonths:termsMonths,shipDays:shipCfg.days,
-    cvr:visits>0?onlineOrders/visits:0,priceF:priceF};
+  var ef=o.effect;
+  el("g-stage").innerHTML=
+  '<div class="g-result">'+
+    '<div class="g-verdict '+v.cls+'">'+
+      '<div class="g-verdict-title">'+v.title+'</div>'+
+      '<div class="g-verdict-sub">'+o.comment+'</div>'+
+      '<div class="g-verdict-score">本关得分 '+o.score+' / 100</div>'+
+    '</div>'+
+    '<div class="g-result-body">'+
+      '<div class="g-detail">你选择了「<b>'+o.title+'</b>」——'+o.detail+'</div>'+
+      '<div class="g-changes">'+
+        chg("现金流",ef.cash,GAME.biz.cash,gMoney)+
+        chg("月营收",ef.revenue,GAME.biz.revenue,gMoney)+
+        chg("净利率",ef.profitRate,Math.round(GAME.biz.profitRate)+"%",function(n){return Math.round(n)+"%"})+
+        chg("客户数",ef.customers,Math.round(GAME.biz.customers),gInt)+
+        chg("品牌力",ef.brand,Math.round(GAME.biz.brand),function(n){return Math.round(n)})+
+        chg("风险指数",ef.risk,Math.round(GAME.biz.risk),function(n){return Math.round(n)},true)+
+      '</div>'+
+      '<div class="g-next-wrap"><button class="g-btn" data-act="next">'+
+        (GAME.idx+1<SCENES.length?"下一个决策 &rarr;":"查看年度结算 &rarr;")+'</button></div>'+
+    '</div>'+
+  '</div>';
+  gRenderTopbar();
 }
 
-function simKpi(v,base,lbl,fmt,inv){
-  var diff=base!==null?(v-base):0;
-  var cls=diff>0?"up":diff<0?"down":"";
-  if(inv){cls=diff>0?"down":diff<0?"up":""}
-  return '<div class="sim-kpi"><div class="v '+(typeof v==="number"&&v<0?"neg":(v>0&&fmt==="%s"?"pos":""))+'">'+fmt(v)+'</div>'+
-    '<div class="l">'+lbl+'</div>'+
-    (base!==null?'<div class="d '+cls+'">'+(diff>=0?"+":"")+fmt(diff)+'</div>':"")+'</div>';
+/* ---- 下一关 / 结算 ---- */
+function gNext(){
+  if(GAME.idx+1<SCENES.length){GAME.idx++;gRenderScene()}
+  else{gRenderFinal()}
 }
-function fmt$(n){return n>=0?"$"+Math.round(n).toLocaleString("en-US"):"-$"+Math.round(-n).toLocaleString("en-US")}
-function fmtX(n){return n.toFixed(2)+"x"}
-function fmtN(n){return Math.round(n).toLocaleString("en-US")}
-function fmtP(n){return(n*100).toFixed(1)+"%"}
 
-var SIM_LAST=null,SIM_BASELINE=null;
-
-function simRender(log){
-  var p={ppc:+el("in-ppc").value,seo:+el("in-seo").value,kol:+el("in-kol").value,exh:+el("in-exh").value,
-    plat:el("in-plat").value,price:+el("in-price").value,ship:el("in-ship").value,terms:+el("in-terms").value,
-    fx:+el("in-fx").value,demand:+el("in-demand").value,frate:+el("in-frate").value};
-  var r=simCalc(p);
-  var b=SIM_BASELINE;
-
-  /* 标签 */
-  el("lbl-ppc").textContent=fmt$(p.ppc)+"/日";
-  el("lbl-seo").textContent=fmt$(p.seo)+"/月";
-  el("lbl-kol").textContent=p.kol+" 次/月";
-  el("lbl-exh").textContent=p.exh+" 场/季";
-  el("lbl-price").textContent=fmt$(p.price);
-  el("lbl-terms").textContent=p.terms+" 天";
-  el("lbl-fx").textContent=p.fx.toFixed(2);
-  el("lbl-demand").textContent=p.demand;
-  el("lbl-frate").textContent=(p.frate>=0?"+":"")+p.frate+"%";
-
-  /* KPI */
-  el("sim-kpis").innerHTML=
-    simKpi(r.revenue,b?b.revenue:null,"月营收",fmt$)+
-    simKpi(r.orders,b?b.orders:null,"月订单",fmtN)+
-    simKpi(r.netProfit,b?b.netProfit:null,"月净利润",fmt$)+
-    simKpi(r.roas,b?b.roas:null,"ROAS",fmtX)+
-    simKpi(r.roi,b?b.roi:null,"营销 ROI",fmtX)+
-    simKpi(r.perOrderProfit,b?b.perOrderProfit:null,"单笔净利",fmt$)+
-    simKpi(r.mktSpend,b?b.mktSpend:null,"营销投入",fmt$,true)+
-    simKpi(r.cvr,b?b.cvr:null,"转化率",fmtP);
-
-  /* 因果流 */
-  el("sim-flow").innerHTML=
-    '<div class="flow-node"><span class="fv">'+fmt$(r.mktSpend)+'</span>营销投入</div><span class="flow-arrow">→</span>'+
-    '<div class="flow-node"><span class="fv">'+fmtN(r.impressions)+'</span>曝光</div><span class="flow-arrow">→</span>'+
-    '<div class="flow-node"><span class="fv">'+fmtN(r.clicks)+'</span>点击</div><span class="flow-arrow">→</span>'+
-    '<div class="flow-node"><span class="fv">'+fmtN(r.visits)+'</span>访客</div><span class="flow-arrow">→</span>'+
-    '<div class="flow-node"><span class="fv">'+fmtN(r.orders)+'</span>订单</div><span class="flow-arrow">→</span>'+
-    '<div class="flow-node"><span class="fv">'+fmt$(r.revenue)+'</span>营收</div><span class="flow-arrow">−</span>'+
-    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.commission)+'</span>平台佣金</div><span class="flow-arrow">−</span>'+
-    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.freight)+'</span>物流</div><span class="flow-arrow">−</span>'+
-    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.cogs)+'</span>产品成本</div><span class="flow-arrow">−</span>'+
-    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.mktSpend)+'</span>营销</div><span class="flow-arrow">=</span>'+
-    '<div class="flow-node hl"><span class="fv '+(r.netProfit>=0?"pos":"neg")+'">'+fmt$(r.netProfit)+'</span>月净利润</div>';
-
-  /* 漏斗 */
-  var stages=[["曝光",r.impressions,"#60a5fa"],["点击",r.clicks,"#22d3ee"],["访客",r.visits,"#a78bfa"],["加购",r.visits*0.18,"#f472b6"],["订单",r.orders,"#34d399"]];
-  var maxS=stages[0][1]||1;
-  el("sim-funnel").innerHTML=stages.map(function(s,i){
-    var conv=i>0&&stages[i-1][1]>0?(s[1]/stages[i-1][1]*100).toFixed(1)+"%":"";
-    return '<div class="fstage"><span class="fl">'+s[0]+'</span><div class="fb"><i style="width:'+Math.max(s[1]/maxS*100,2)+'%;background:'+s[2]+'"></i></div>'+
-      '<span class="fv">'+fmtN(s[1])+'<em>'+(i>0?"← "+conv:"")+'</em></span></div>';
-  }).join("");
-
-  /* 单位经济 */
-  var per=r.orders>0?1:0;
-  var rows=[
-    ["客单价",r.aov,"var(--blue)"],
-    ["− 产品成本",r.cogs/r.orders*per,"var(--red)"],
-    ["− 平台佣金",r.commission/r.orders*per,"var(--red)"],
-    ["− 物流",r.freight/r.orders*per,"var(--red)"],
-    ["− 其他运营",r.otherOpex/r.orders*per,"var(--red)"],
-    ["− 营销获客",r.mktSpend/r.orders*per,"var(--red)"],
-    ["− 汇兑损失",r.fxLoss/r.orders*per,"var(--red)"],
-    ["= 单笔净利",r.perOrderProfit,r.perOrderProfit>=0?"var(--green)":"var(--red)"]
-  ];
-  var maxW=Math.max(r.aov,Math.abs(r.perOrderProfit),1);
-  el("sim-waterfall").innerHTML=rows.map(function(w){
-    var pct=Math.min(Math.abs(w[1])/maxW*100,100);
-    return '<div class="wrow"><span class="wl">'+w[0]+'</span><div class="wt"><i style="width:'+pct+'%;background:'+w[2]+'"></i></div><span class="wv">'+fmt$(w[1])+'</span></div>';
-  }).join("");
-
-  /* 现金流 */
-  var maxC=1,minC=0;
-  r.cashArr.forEach(function(c){if(c>maxC)maxC=c;if(c<minC)minC=c});
-  var range=maxC-minC||1;
-  el("sim-cashflow").innerHTML=r.cashArr.map(function(c,i){
-    var h=Math.abs(c)/range*100;
-    var col=c>=0?"var(--blue)":"var(--red)";
-    return '<div class="mcol" title="第 '+(i+1)+' 月：'+fmt$(c)+'"><i style="height:'+Math.max(h,3)+'%;background:'+col+'"></i><span>M'+(i+1)+'</span></div>';
-  }).join("");
-  el("sim-cash-min").textContent="累计："+fmt$(r.cumCash)+" · 回款滞后 "+p.terms+" 天";
-
-  /* 敏感性 */
-  var sens=[];
-  [["PPC 日预算","ppc",50],["客单价","price",10],["平台佣金","plat",0],["汇率","fx",0.2],["需求指数","demand",10],["海运费率","frate",5]].forEach(function(cfg){
-    var name=cfg[0],key=cfg[1],step=cfg[2];
-    if(step===0)return;
-    var p2=JSON.parse(JSON.stringify(p));
-    if(key==="plat"){ /* 平台切换敏感性 */
-      var plats=["AMZ","ALI","SHO","TIK","EBA","WAL"];
-      var best=null,worst=null;
-      plats.forEach(function(pl){
-        var p3=JSON.parse(JSON.stringify(p));p3.plat=pl;
-        var np=simCalc(p3).netProfit;
-        if(best===null||np>best[1])best=[pl,np];
-        if(worst===null||np<worst[1])worst=[pl,np];
-      });
-      sens.push({name:"平台选择",d:r.netProfit-best[1],note:"最优 "+best[0]+" "+fmt$(best[1])+" · 最差 "+worst[0]+" "+fmt$(worst[1])});
-      return;
-    }
-    p2[key]=p[key]+step;
-    var up=simCalc(p2).netProfit-r.netProfit;
-    p2[key]=p[key]-step;
-    var down=simCalc(p2).netProfit-r.netProfit;
-    sens.push({name:name,d:Math.abs(up)>Math.abs(down)?up:down,note:"±"+step+" → "+(up>=0?"+":"")+fmt$(up)+" / "+(down>=0?"+":"")+fmt$(down)});
-  });
-  sens.sort(function(a,b){return Math.abs(b.d)-Math.abs(a.d)});
-  var maxSens=Math.max.apply(null,sens.map(function(s){return Math.abs(s.d)}))||1;
-  el("sim-sensitivity").innerHTML=sens.map(function(s){
-    var pct=Math.abs(s.d)/maxSens*100;
-    var col=s.d>0?"var(--green)":"var(--red)";
-    return '<div class="brow"><span class="blabel" style="width:86px">'+s.name+'</span>'+
-      '<span class="btrack"><i style="width:'+pct+'%;background:'+col+'"></i></span>'+
-      '<span class="bval" style="width:200px;font-size:10.5px">'+(s.d>=0?"+":"")+fmt$(s.d)+'<em style="color:var(--muted);margin-left:6px">'+s.note+'</em></span></div>';
-  }).join("");
-
-  /* 决策日志 */
-  if(log){
-    SIM_LOG_N++;
-    var base=SIM_BASELINE;
-    var dRev=base?r.revenue-base.revenue:0,dNp=base?r.netProfit-base.netProfit:0;
-    var line=document.createElement("div");line.className="log-line";
-    line.innerHTML='<span class="log-ms">#'+SIM_LOG_N+'</span><span>'+log+' → 营收 '+(dRev>=0?"+":"")+fmt$(dRev)+' · 净利 '+(dNp>=0?"+":"")+fmt$(dNp)+'</span>';
-    var lg=el("sim-log");lg.appendChild(line);lg.scrollTop=lg.scrollHeight;
+/* ---- 结算页 ---- */
+function gRenderFinal(){
+  GAME.phase="final";
+  var total=0;GAME.history.forEach(function(h){total+=h.score});
+  var avg=Math.round(total/GAME.history.length);
+  var grade=avg>=85?"S":avg>=75?"A":avg>=65?"B":avg>=55?"C":"D";
+  var gradeTxt={
+    S:"商业奇才！这家公司在你手上市值翻倍",
+    A:"优秀操盘手，稳健中带着锋芒",
+    B:"合格的外贸主管，中规中矩",
+    C:"有点勉强，这一年交了不少学费",
+    D:"建议回炉重造……仓库钥匙先交出来"
+  }[grade];
+  var b=GAME.biz,i0=BIZ_INIT;
+  function fst(label,init,now,fmt,invert){
+    var delta=now-init;
+    var d=delta>0?"up":delta<0?"down":"";
+    if(invert){d=delta>0?"down":delta<0?"up":""}
+    return '<div class="g-chg"><div class="l">'+label+'</div>'+
+      '<div class="d '+d+'">'+fmt(now)+'</div>'+
+      '<div class="n">年初 '+fmt(init)+'</div></div>';
   }
-  SIM_LAST=r;
+  var review=GAME.history.map(function(h,i){
+    var v=VERDICTS[h.verdict];
+    return '<div class="g-rev-item">'+
+      '<span class="g-rev-badge '+v.badge+'">'+v.label+'</span>'+
+      '<span class="g-rev-name">'+(i+1)+'. '+h.scene+'</span>'+
+      '<span class="g-rev-choice">'+h.choice+'</span>'+
+      '<span class="g-rev-score">'+h.score+'</span></div>';
+  }).join("");
+  el("g-stage").innerHTML=
+  '<div class="g-final">'+
+    '<div class="g-final-head">'+
+      '<div class="g-grade grade-'+grade+'">'+grade+'</div>'+
+      '<div class="g-final-title">年度经营评级 · 平均分 '+avg+'</div>'+
+      '<div class="g-final-sub">'+gradeTxt+'</div>'+
+    '</div>'+
+    '<div class="g-final-stats">'+
+      fst("现金流",i0.cash,b.cash,gMoney)+
+      fst("月营收",i0.revenue,b.revenue,gMoney)+
+      fst("净利率",Math.round(i0.profitRate),Math.round(b.profitRate)+"%",function(n){return Math.round(n)+"%"})+
+      fst("客户数",Math.round(i0.customers),Math.round(b.customers),gInt)+
+      fst("品牌力",Math.round(i0.brand),Math.round(b.brand),function(n){return Math.round(n)})+
+      fst("风险指数",Math.round(i0.risk),Math.round(b.risk),function(n){return Math.round(n)},true)+
+    '</div>'+
+    '<div class="g-review"><h4>你的 10 个决策回顾</h4>'+review+'</div>'+
+    '<div class="g-next-wrap"><button class="g-btn ghost" data-act="restart">再经营一年 &rarr;</button></div>'+
+  '</div>';
+  gRenderTopbar();
 }
 
-/* 模拟器事件绑定 */
-function simBind(){
-  var inputs=["in-ppc","in-seo","in-kol","in-exh","in-plat","in-price","in-ship","in-terms","in-fx","in-demand","in-frate"];
-  var names={ppc:"PPC 日预算",seo:"SEO 月投入",kol:"KOL 次数",exh:"展会场次",plat:"投放平台",price:"客单价",ship:"物流方式",terms:"回款账期",fx:"结算汇率",demand:"需求指数",frate:"海运费率"};
-  var timer=null;
-  inputs.forEach(function(id){
-    el(id).addEventListener("input",function(){
-      clearTimeout(timer);
-      var key=id.slice(3);
-      var v=el(id).value;
-      var detail=key==="plat"?(el(id).selectedOptions[0].textContent.split(" ")[0]):key==="ship"?(el(id).selectedOptions[0].textContent.split(" ")[0]):v;
-      timer=setTimeout(function(){simRender(names[key]+" = "+detail)},120);
-    });
-    el(id).addEventListener("change",function(){
-      var key=id.slice(3);
-      var detail=key==="plat"?(el(id).selectedOptions[0].textContent.split(" ")[0]):key==="ship"?(el(id).selectedOptions[0].textContent.split(" ")[0]):el(id).value;
-      simRender(names[key]+" = "+detail);
-    });
-  });
-  el("btn-sim-reset").addEventListener("click",function(){
-    Object.keys(SIM_BASE).forEach(function(k){
-      var id="in-"+k;
-      if(el(id).tagName==="SELECT"){el(id).value=SIM_BASE[k]}
-      else{el(id).value=SIM_BASE[k]}
-    });
-    simRender("重置为基准方案");
-  });
+/* ---- 入口 & 事件委托 ---- */
+function gInit(){
+  GAME={phase:"intro",idx:0,biz:JSON.parse(JSON.stringify(BIZ_INIT)),history:[]};
+  gRenderIntro();
 }
+el("g-stage").addEventListener("click",function(e){
+  var t=e.target.closest?e.target.closest("[data-act]"):null;
+  if(!t)return;
+  var act=t.dataset.act;
+  if(act==="start")gRenderScene();
+  else if(act==="opt")gChoose(+t.dataset.i);
+  else if(act==="next")gNext();
+  else if(act==="restart")gInit();
+});
 
 document.querySelectorAll(".tabbtn").forEach(function(b){
   b.addEventListener("click",function(){
@@ -1544,9 +1671,7 @@ el("btn-regen").addEventListener("click",function(){
 /* ============ 初始化 ============ */
 D=generate(42,50);
 renderAll();
-simBind();
-simRender();
-SIM_BASELINE=JSON.parse(JSON.stringify(SIM_LAST));
+gInit();
 
 })();
 </script>
