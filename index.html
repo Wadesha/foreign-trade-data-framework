@@ -208,6 +208,57 @@ button.btn.primary:hover{background:#3b82f6;color:#0b1220}
 .roi-cell .trend.up{color:var(--green)}
 .roi-cell .trend.down{color:var(--red)}
 
+/* ===== Full-flow Simulator ===== */
+.sim-layout{display:grid;grid-template-columns:290px 1fr;gap:14px}
+@media(max-width:920px){.sim-layout{grid-template-columns:1fr}}
+.sim-side{display:flex;flex-direction:column;gap:12px}
+.sim-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.sim-card h3{font-size:13px;margin-bottom:10px;color:var(--blue)}
+.sim-main{display:flex;flex-direction:column;gap:12px}
+.sim-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.sim-kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-align:center}
+.sim-kpi .v{font-size:19px;font-weight:800;font-family:var(--mono)}
+.sim-kpi .v.pos{color:var(--green)}
+.sim-kpi .v.neg{color:var(--red)}
+.sim-kpi .l{font-size:11px;color:var(--muted);margin-top:2px}
+.sim-kpi .d{font-size:10.5px;font-family:var(--mono);margin-top:2px}
+.sim-kpi .d.up{color:var(--green)}
+.sim-kpi .d.down{color:var(--red)}
+.ctrl-row{margin:10px 0}
+.ctrl-row label{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+.ctrl-row label b{color:var(--blue);font-family:var(--mono);font-weight:600}
+.ctrl-row input[type=range]{width:100%;accent-color:var(--blue);height:4px}
+.ctrl-row select{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:5px;padding:6px 8px;font-size:12.5px}
+
+/* causal flow */
+.sim-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow-node{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:11.5px;min-width:96px;text-align:center}
+.flow-node .fv{font-size:13px;font-weight:700;font-family:var(--mono);margin-top:2px;display:block}
+.flow-node.hl{border-color:var(--blue);background:rgba(96,165,250,.08)}
+.flow-node .fv.pos{color:var(--green)}
+.flow-node .fv.neg{color:var(--red)}
+.flow-arrow{color:var(--muted);font-size:14px;flex-shrink:0}
+
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:3px}
+.fstage{display:flex;align-items:center;gap:8px}
+.fstage .fl{width:72px;font-size:11px;color:var(--muted);text-align:right;flex-shrink:0}
+.fstage .fb{flex:1;background:var(--surface2);border-radius:4px;overflow:hidden}
+.fstage .fb i{display:block;height:18px;border-radius:4px;opacity:.85;transition:width .3s}
+.fstage .fv{width:90px;font-size:11px;font-family:var(--mono);flex-shrink:0}
+.fstage .fv em{font-style:normal;color:var(--muted);font-size:10px;display:block}
+
+/* waterfall */
+.waterfall{display:flex;flex-direction:column;gap:2px}
+.wrow{display:flex;align-items:center;gap:8px;font-size:11.5px}
+.wrow .wl{width:86px;color:var(--muted);text-align:right;flex-shrink:0}
+.wrow .wt{flex:1;height:14px;position:relative;background:var(--surface2);border-radius:3px;overflow:hidden}
+.wrow .wt i{position:absolute;top:0;height:100%;border-radius:3px;transition:.3s}
+.wrow .wv{width:64px;font-family:var(--mono);font-size:11px;text-align:right;flex-shrink:0}
+
+.sim-grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:920px){.sim-grid2{grid-template-columns:1fr}}
+
 footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color:var(--muted);font-size:12px}
 </style>
 </head>
@@ -231,7 +282,8 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color
 
 <nav class="tabs">
   <div class="wrap">
-    <button class="tabbtn on" data-target="s-overview">总览仪表盘</button>
+    <button class="tabbtn on" data-target="s-sim">全流程模拟器</button>
+    <button class="tabbtn" data-target="s-overview">总览仪表盘</button>
     <button class="tabbtn" data-target="s-family">数据家族</button>
     <button class="tabbtn" data-target="s-platform">平台对比</button>
     <button class="tabbtn" data-target="s-marketing">营销渠道</button>
@@ -245,8 +297,91 @@ footer{border-top:1px solid var(--border);padding:24px 0;text-align:center;color
 
 <main class="wrap">
 
+<!-- ================= 全流程模拟器 ================= -->
+<section class="panel show" id="s-sim">
+  <h2>全流程模拟器 —— 你的操作，实时影响结果</h2>
+  <p class="desc">调整左侧任一「决策参数」，右侧全链路指标立即重算：营销投入 → 流量漏斗 → 订单成交 → 平台佣金/物流 → 发票/回款 → 汇率折算 → 最终净利润 & ROI。每个数字都由同一条因果链驱动，改动任何一环，全链路联动。</p>
+
+  <div class="sim-layout">
+    <!-- 决策参数 -->
+    <div class="sim-side">
+      <div class="sim-card">
+        <h3>&#9312; 营销投放决策</h3>
+        <div class="ctrl-row"><label>PPC 广告日预算 <b id="lbl-ppc">$300</b></label><input type="range" id="in-ppc" min="0" max="1000" step="10" value="300"></div>
+        <div class="ctrl-row"><label>SEO/内容月投入 <b id="lbl-seo">$2,000</b></label><input type="range" id="in-seo" min="0" max="10000" step="100" value="2000"></div>
+        <div class="ctrl-row"><label>KOL 合作次数/月 <b id="lbl-kol">2</b></label><input type="range" id="in-kol" min="0" max="10" step="1" value="2"></div>
+        <div class="ctrl-row"><label>展会/季度 <b id="lbl-exh">1</b></label><input type="range" id="in-exh" min="0" max="4" step="1" value="1"></div>
+      </div>
+      <div class="sim-card">
+        <h3>&#9313; 渠道与运营决策</h3>
+        <div class="ctrl-row"><label>主投放平台</label>
+          <select id="in-plat">
+            <option value="AMZ" selected>Amazon (佣金15%)</option>
+            <option value="ALI">Alibaba (佣金8%)</option>
+            <option value="SHO">Shopify (佣金12%)</option>
+            <option value="TIK">TikTok Shop (佣金10%)</option>
+            <option value="EBA">eBay (佣金11%)</option>
+            <option value="WAL">Walmart (佣金14%)</option>
+          </select></div>
+        <div class="ctrl-row"><label>客单价策略 <b id="lbl-price">$120</b></label><input type="range" id="in-price" min="40" max="300" step="5" value="120"></div>
+        <div class="ctrl-row"><label>物流方式</label>
+          <select id="in-ship">
+            <option value="sea" selected>海运 (慢/便宜)</option>
+            <option value="air">空运 (快/贵)</option>
+            <option value="rail">中欧班列 (中)</option>
+          </select></div>
+        <div class="ctrl-row"><label>回款账期（天）<b id="lbl-terms">30</b></label><input type="range" id="in-terms" min="0" max="120" step="15" value="30"></div>
+      </div>
+      <div class="sim-card">
+        <h3>&#9314; 外部环境</h3>
+        <div class="ctrl-row"><label>结算汇率（本币→USD）<b id="lbl-fx">7.20</b></label><input type="range" id="in-fx" min="6.0" max="8.5" step="0.05" value="7.2"></div>
+        <div class="ctrl-row"><label>市场需求指数 <b id="lbl-demand">100</b></label><input type="range" id="in-demand" min="50" max="160" step="5" value="100"></div>
+        <div class="ctrl-row"><label>海运费率波动 <b id="lbl-frate">+0%</b></label><input type="range" id="in-frate" min="-30" max="80" step="5" value="0"></div>
+      </div>
+      <button class="btn primary" id="btn-sim-reset" style="width:100%">重置为基准方案</button>
+    </div>
+
+    <!-- 结果面板 -->
+    <div class="sim-main">
+      <div class="sim-kpis" id="sim-kpis"></div>
+
+      <div class="sim-card">
+        <h3>全链路因果图 —— 从投入到净利</h3>
+        <div class="sim-flow" id="sim-flow"></div>
+      </div>
+
+      <div class="sim-grid2">
+        <div class="sim-card">
+          <h3>营销漏斗（月度）</h3>
+          <div class="funnel" id="sim-funnel"></div>
+        </div>
+        <div class="sim-card">
+          <h3>单位经济模型（每单）</h3>
+          <div class="waterfall" id="sim-waterfall"></div>
+        </div>
+      </div>
+
+      <div class="sim-card">
+        <h3>现金流时间线（12 个月 · 考虑回款账期）</h3>
+        <div class="cols" id="sim-cashflow"></div>
+        <div class="flegend" style="margin-top:8px"><span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:2px"></span> 月净现金流 &nbsp; <span style="display:inline-block;width:10px;height:10px;background:var(--red);border-radius:2px"></span> 回款滞后造成的负现金流 &nbsp; <b id="sim-cash-min"></b></div>
+      </div>
+
+      <div class="sim-card">
+        <h3>敏感性分析 —— 哪个参数对净利影响最大</h3>
+        <div id="sim-sensitivity"></div>
+      </div>
+
+      <div class="sim-card">
+        <h3>决策日志 —— 你的每次操作都被记录</h3>
+        <div class="engine-log" id="sim-log" style="max-height:180px;overflow:auto"><div class="log-line"><span class="log-ms">BASE</span><span>基准方案已加载</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 总览 ================= -->
-<section class="panel show" id="s-overview">
+<section class="panel" id="s-overview">
   <h2>总览仪表盘</h2>
   <p class="desc">以下数据由浏览器端「全场景家族化数据引擎」实时生成（种子 42 · 50 个客户家族 · 含 6 个平台 × 7 个营销渠道 × 10 个品类 × 100+ SKU 产品池）。</p>
   <div class="grid-kpi">
@@ -1132,7 +1267,256 @@ function renderAll(){
   renderProv();renderOrders();renderEngine();renderQuality();
 }
 
-/* ============ 15. 事件绑定 ============ */
+/* ============ 16. 全流程模拟器 ============ */
+var SIM_BASE={ppc:300,seo:2000,kol:2,exh:1,plat:"AMZ",price:120,ship:"sea",terms:30,fx:7.2,demand:100,frate:0};
+var SIM_LOG_N=0;
+
+function simCalc(p){
+  /* --- 1. 营销投入（月度）--- */
+  var ppcM=p.ppc*30, seoM=p.seo, kolM=p.kol*850, exhM=p.exh*4000/3;
+  var mktSpend=ppcM+seoM+kolM+exhM;
+
+  /* --- 2. 流量漏斗 --- */
+  /* 各渠道单位流量成本与转化效率（月度）*/
+  var ppcClicks=ppcM/1.2;                 /* PPC：$1.2/点击 */
+  var seoClicks=seoM*0.6;                 /* SEO/内容：长尾复利，$1.7/点击 */
+  var kolClicks=kolM*0.5;                 /* KOL：种草内容带量 */
+  var demandF=p.demand/100;
+  var clicks=(ppcClicks+seoClicks+kolClicks)*demandF;
+  var impressions=clicks*38;              /* 整体 CTR ≈ 2.6% */
+  var visits=clicks*0.82;                 /* 82% 点击抵达详情页 */
+  /* 平台转化率基准 */
+  var cvrBase={AMZ:0.040,ALI:0.012,SHO:0.024,TIK:0.028,EBA:0.020,WAL:0.026}[p.plat]||0.02;
+  /* 价格弹性：价格越高转化越低（对数弹性 -0.8） */
+  var priceF=Math.pow(p.price/120,-0.8);
+  var onlineOrders=Math.round(visits*cvrBase*priceF*demandF);
+  /* 展会：高意向 B2B 线索，约 30% 成交（大额订单，2.5 倍客单价） */
+  var exhLeads=exhM/18*demandF;
+  var exhOrders=Math.round(exhLeads*0.3);
+  var orders=onlineOrders+exhOrders;
+
+  /* --- 3. 交易层（展会订单客单价为线上 2.5 倍）--- */
+  var exhRev=exhOrders*p.price*2.5;
+  var onlineRev=onlineOrders*p.price;
+  var revenue=onlineRev+exhRev;
+  var aov=orders>0?revenue/orders:0;
+
+  /* --- 4. 平台佣金（展会订单走线下，无佣金）--- */
+  var platFee={AMZ:0.15,ALI:0.08,SHO:0.12,TIK:0.10,EBA:0.11,WAL:0.14}[p.plat]||0.12;
+  var commission=onlineRev*platFee;
+
+  /* --- 5. 物流 --- */
+  var shipCfg={sea:{rate:0.08,days:32},air:{rate:0.24,days:7},rail:{rate:0.12,days:18}}[p.ship]||{rate:0.08,days:32};
+  var freight=revenue*shipCfg.rate*(1+p.frate/100);
+
+  /* --- 6. 成本结构（产品成本约 38%）--- */
+  var cogs=revenue*0.38;
+  var otherOpex=revenue*0.06; /* 人工/包装/退货 */
+
+  /* --- 7. 汇率影响（本币计价的成本占 55%）--- */
+  var localCost=(cogs+freight*0.3+otherOpex)*0.55;
+  var fxLoss=localCost*(1-7.2/p.fx); /* 本币升值（fx 变小）则亏损 */
+
+  /* --- 8. 回款账期 → 现金流滞后 */
+  var termsMonths=p.terms/30;
+  /* 12 个月现金流模拟：第 m 月的现金流出当月发生，回款滞后 termsMonths */
+  var cashArr=[],cum=0;
+  for(var m=0;m<12;m++){
+    var outM=mktSpend+cogs/12*12/12; /* 简化：月均成本 */
+    var inM=(m>=termsMonths)?revenue/12:0;
+    var netM=inM-(mktSpend+(cogs+freight+otherOpex)/12);
+    cashArr.push(netM);cum+=netM;
+  }
+
+  /* --- 9. 最终损益 --- */
+  var grossProfit=revenue-cogs;
+  var netProfit=revenue-commission-freight-cogs-otherOpex-mktSpend-fxLoss;
+  var roas=mktSpend>0?revenue/mktSpend:0;
+  var roi=mktSpend>0?netProfit/mktSpend:0;
+  var contribution=revenue-cogs-commission-freight-otherOpex; /* 贡献毛利（不含营销） */
+
+  return {mktSpend:mktSpend,ppcM:ppcM,seoM:seoM,kolM:kolM,exhM:exhM,
+    impressions:impressions,clicks:clicks,visits:visits,orders:orders,
+    onlineOrders:onlineOrders,exhOrders:exhOrders,
+    revenue:revenue,aov:aov,commission:commission,commissionRate:platFee,
+    freight:freight,cogs:cogs,otherOpex:otherOpex,fxLoss:fxLoss,
+    netProfit:netProfit,grossProfit:grossProfit,contribution:contribution,
+    roas:roas,roi:roi,perOrderProfit:orders>0?netProfit/orders:0,
+    cashArr:cashArr,cumCash:cum,termsMonths:termsMonths,shipDays:shipCfg.days,
+    cvr:visits>0?onlineOrders/visits:0,priceF:priceF};
+}
+
+function simKpi(v,base,lbl,fmt,inv){
+  var diff=base!==null?(v-base):0;
+  var cls=diff>0?"up":diff<0?"down":"";
+  if(inv){cls=diff>0?"down":diff<0?"up":""}
+  return '<div class="sim-kpi"><div class="v '+(typeof v==="number"&&v<0?"neg":(v>0&&fmt==="%s"?"pos":""))+'">'+fmt(v)+'</div>'+
+    '<div class="l">'+lbl+'</div>'+
+    (base!==null?'<div class="d '+cls+'">'+(diff>=0?"+":"")+fmt(diff)+'</div>':"")+'</div>';
+}
+function fmt$(n){return n>=0?"$"+Math.round(n).toLocaleString("en-US"):"-$"+Math.round(-n).toLocaleString("en-US")}
+function fmtX(n){return n.toFixed(2)+"x"}
+function fmtN(n){return Math.round(n).toLocaleString("en-US")}
+function fmtP(n){return(n*100).toFixed(1)+"%"}
+
+var SIM_LAST=null,SIM_BASELINE=null;
+
+function simRender(log){
+  var p={ppc:+el("in-ppc").value,seo:+el("in-seo").value,kol:+el("in-kol").value,exh:+el("in-exh").value,
+    plat:el("in-plat").value,price:+el("in-price").value,ship:el("in-ship").value,terms:+el("in-terms").value,
+    fx:+el("in-fx").value,demand:+el("in-demand").value,frate:+el("in-frate").value};
+  var r=simCalc(p);
+  var b=SIM_BASELINE;
+
+  /* 标签 */
+  el("lbl-ppc").textContent=fmt$(p.ppc)+"/日";
+  el("lbl-seo").textContent=fmt$(p.seo)+"/月";
+  el("lbl-kol").textContent=p.kol+" 次/月";
+  el("lbl-exh").textContent=p.exh+" 场/季";
+  el("lbl-price").textContent=fmt$(p.price);
+  el("lbl-terms").textContent=p.terms+" 天";
+  el("lbl-fx").textContent=p.fx.toFixed(2);
+  el("lbl-demand").textContent=p.demand;
+  el("lbl-frate").textContent=(p.frate>=0?"+":"")+p.frate+"%";
+
+  /* KPI */
+  el("sim-kpis").innerHTML=
+    simKpi(r.revenue,b?b.revenue:null,"月营收",fmt$)+
+    simKpi(r.orders,b?b.orders:null,"月订单",fmtN)+
+    simKpi(r.netProfit,b?b.netProfit:null,"月净利润",fmt$)+
+    simKpi(r.roas,b?b.roas:null,"ROAS",fmtX)+
+    simKpi(r.roi,b?b.roi:null,"营销 ROI",fmtX)+
+    simKpi(r.perOrderProfit,b?b.perOrderProfit:null,"单笔净利",fmt$)+
+    simKpi(r.mktSpend,b?b.mktSpend:null,"营销投入",fmt$,true)+
+    simKpi(r.cvr,b?b.cvr:null,"转化率",fmtP);
+
+  /* 因果流 */
+  el("sim-flow").innerHTML=
+    '<div class="flow-node"><span class="fv">'+fmt$(r.mktSpend)+'</span>营销投入</div><span class="flow-arrow">→</span>'+
+    '<div class="flow-node"><span class="fv">'+fmtN(r.impressions)+'</span>曝光</div><span class="flow-arrow">→</span>'+
+    '<div class="flow-node"><span class="fv">'+fmtN(r.clicks)+'</span>点击</div><span class="flow-arrow">→</span>'+
+    '<div class="flow-node"><span class="fv">'+fmtN(r.visits)+'</span>访客</div><span class="flow-arrow">→</span>'+
+    '<div class="flow-node"><span class="fv">'+fmtN(r.orders)+'</span>订单</div><span class="flow-arrow">→</span>'+
+    '<div class="flow-node"><span class="fv">'+fmt$(r.revenue)+'</span>营收</div><span class="flow-arrow">−</span>'+
+    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.commission)+'</span>平台佣金</div><span class="flow-arrow">−</span>'+
+    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.freight)+'</span>物流</div><span class="flow-arrow">−</span>'+
+    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.cogs)+'</span>产品成本</div><span class="flow-arrow">−</span>'+
+    '<div class="flow-node"><span class="fv neg">-'+fmt$(r.mktSpend)+'</span>营销</div><span class="flow-arrow">=</span>'+
+    '<div class="flow-node hl"><span class="fv '+(r.netProfit>=0?"pos":"neg")+'">'+fmt$(r.netProfit)+'</span>月净利润</div>';
+
+  /* 漏斗 */
+  var stages=[["曝光",r.impressions,"#60a5fa"],["点击",r.clicks,"#22d3ee"],["访客",r.visits,"#a78bfa"],["加购",r.visits*0.18,"#f472b6"],["订单",r.orders,"#34d399"]];
+  var maxS=stages[0][1]||1;
+  el("sim-funnel").innerHTML=stages.map(function(s,i){
+    var conv=i>0&&stages[i-1][1]>0?(s[1]/stages[i-1][1]*100).toFixed(1)+"%":"";
+    return '<div class="fstage"><span class="fl">'+s[0]+'</span><div class="fb"><i style="width:'+Math.max(s[1]/maxS*100,2)+'%;background:'+s[2]+'"></i></div>'+
+      '<span class="fv">'+fmtN(s[1])+'<em>'+(i>0?"← "+conv:"")+'</em></span></div>';
+  }).join("");
+
+  /* 单位经济 */
+  var per=r.orders>0?1:0;
+  var rows=[
+    ["客单价",r.aov,"var(--blue)"],
+    ["− 产品成本",r.cogs/r.orders*per,"var(--red)"],
+    ["− 平台佣金",r.commission/r.orders*per,"var(--red)"],
+    ["− 物流",r.freight/r.orders*per,"var(--red)"],
+    ["− 其他运营",r.otherOpex/r.orders*per,"var(--red)"],
+    ["− 营销获客",r.mktSpend/r.orders*per,"var(--red)"],
+    ["− 汇兑损失",r.fxLoss/r.orders*per,"var(--red)"],
+    ["= 单笔净利",r.perOrderProfit,r.perOrderProfit>=0?"var(--green)":"var(--red)"]
+  ];
+  var maxW=Math.max(r.aov,Math.abs(r.perOrderProfit),1);
+  el("sim-waterfall").innerHTML=rows.map(function(w){
+    var pct=Math.min(Math.abs(w[1])/maxW*100,100);
+    return '<div class="wrow"><span class="wl">'+w[0]+'</span><div class="wt"><i style="width:'+pct+'%;background:'+w[2]+'"></i></div><span class="wv">'+fmt$(w[1])+'</span></div>';
+  }).join("");
+
+  /* 现金流 */
+  var maxC=1,minC=0;
+  r.cashArr.forEach(function(c){if(c>maxC)maxC=c;if(c<minC)minC=c});
+  var range=maxC-minC||1;
+  el("sim-cashflow").innerHTML=r.cashArr.map(function(c,i){
+    var h=Math.abs(c)/range*100;
+    var col=c>=0?"var(--blue)":"var(--red)";
+    return '<div class="mcol" title="第 '+(i+1)+' 月：'+fmt$(c)+'"><i style="height:'+Math.max(h,3)+'%;background:'+col+'"></i><span>M'+(i+1)+'</span></div>';
+  }).join("");
+  el("sim-cash-min").textContent="累计："+fmt$(r.cumCash)+" · 回款滞后 "+p.terms+" 天";
+
+  /* 敏感性 */
+  var sens=[];
+  [["PPC 日预算","ppc",50],["客单价","price",10],["平台佣金","plat",0],["汇率","fx",0.2],["需求指数","demand",10],["海运费率","frate",5]].forEach(function(cfg){
+    var name=cfg[0],key=cfg[1],step=cfg[2];
+    if(step===0)return;
+    var p2=JSON.parse(JSON.stringify(p));
+    if(key==="plat"){ /* 平台切换敏感性 */
+      var plats=["AMZ","ALI","SHO","TIK","EBA","WAL"];
+      var best=null,worst=null;
+      plats.forEach(function(pl){
+        var p3=JSON.parse(JSON.stringify(p));p3.plat=pl;
+        var np=simCalc(p3).netProfit;
+        if(best===null||np>best[1])best=[pl,np];
+        if(worst===null||np<worst[1])worst=[pl,np];
+      });
+      sens.push({name:"平台选择",d:r.netProfit-best[1],note:"最优 "+best[0]+" "+fmt$(best[1])+" · 最差 "+worst[0]+" "+fmt$(worst[1])});
+      return;
+    }
+    p2[key]=p[key]+step;
+    var up=simCalc(p2).netProfit-r.netProfit;
+    p2[key]=p[key]-step;
+    var down=simCalc(p2).netProfit-r.netProfit;
+    sens.push({name:name,d:Math.abs(up)>Math.abs(down)?up:down,note:"±"+step+" → "+(up>=0?"+":"")+fmt$(up)+" / "+(down>=0?"+":"")+fmt$(down)});
+  });
+  sens.sort(function(a,b){return Math.abs(b.d)-Math.abs(a.d)});
+  var maxSens=Math.max.apply(null,sens.map(function(s){return Math.abs(s.d)}))||1;
+  el("sim-sensitivity").innerHTML=sens.map(function(s){
+    var pct=Math.abs(s.d)/maxSens*100;
+    var col=s.d>0?"var(--green)":"var(--red)";
+    return '<div class="brow"><span class="blabel" style="width:86px">'+s.name+'</span>'+
+      '<span class="btrack"><i style="width:'+pct+'%;background:'+col+'"></i></span>'+
+      '<span class="bval" style="width:200px;font-size:10.5px">'+(s.d>=0?"+":"")+fmt$(s.d)+'<em style="color:var(--muted);margin-left:6px">'+s.note+'</em></span></div>';
+  }).join("");
+
+  /* 决策日志 */
+  if(log){
+    SIM_LOG_N++;
+    var base=SIM_BASELINE;
+    var dRev=base?r.revenue-base.revenue:0,dNp=base?r.netProfit-base.netProfit:0;
+    var line=document.createElement("div");line.className="log-line";
+    line.innerHTML='<span class="log-ms">#'+SIM_LOG_N+'</span><span>'+log+' → 营收 '+(dRev>=0?"+":"")+fmt$(dRev)+' · 净利 '+(dNp>=0?"+":"")+fmt$(dNp)+'</span>';
+    var lg=el("sim-log");lg.appendChild(line);lg.scrollTop=lg.scrollHeight;
+  }
+  SIM_LAST=r;
+}
+
+/* 模拟器事件绑定 */
+function simBind(){
+  var inputs=["in-ppc","in-seo","in-kol","in-exh","in-plat","in-price","in-ship","in-terms","in-fx","in-demand","in-frate"];
+  var names={ppc:"PPC 日预算",seo:"SEO 月投入",kol:"KOL 次数",exh:"展会场次",plat:"投放平台",price:"客单价",ship:"物流方式",terms:"回款账期",fx:"结算汇率",demand:"需求指数",frate:"海运费率"};
+  var timer=null;
+  inputs.forEach(function(id){
+    el(id).addEventListener("input",function(){
+      clearTimeout(timer);
+      var key=id.slice(3);
+      var v=el(id).value;
+      var detail=key==="plat"?(el(id).selectedOptions[0].textContent.split(" ")[0]):key==="ship"?(el(id).selectedOptions[0].textContent.split(" ")[0]):v;
+      timer=setTimeout(function(){simRender(names[key]+" = "+detail)},120);
+    });
+    el(id).addEventListener("change",function(){
+      var key=id.slice(3);
+      var detail=key==="plat"?(el(id).selectedOptions[0].textContent.split(" ")[0]):key==="ship"?(el(id).selectedOptions[0].textContent.split(" ")[0]):el(id).value;
+      simRender(names[key]+" = "+detail);
+    });
+  });
+  el("btn-sim-reset").addEventListener("click",function(){
+    Object.keys(SIM_BASE).forEach(function(k){
+      var id="in-"+k;
+      if(el(id).tagName==="SELECT"){el(id).value=SIM_BASE[k]}
+      else{el(id).value=SIM_BASE[k]}
+    });
+    simRender("重置为基准方案");
+  });
+}
+
 document.querySelectorAll(".tabbtn").forEach(function(b){
   b.addEventListener("click",function(){
     document.querySelectorAll(".tabbtn").forEach(function(x){x.classList.remove("on")});
@@ -1160,6 +1544,9 @@ el("btn-regen").addEventListener("click",function(){
 /* ============ 初始化 ============ */
 D=generate(42,50);
 renderAll();
+simBind();
+simRender();
+SIM_BASELINE=JSON.parse(JSON.stringify(SIM_LAST));
 
 })();
 </script>
