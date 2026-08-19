@@ -1,10 +1,11 @@
-**在线演示（GitHub Pages）：https://your-username.github.io/foreign-trade-data-framework/**
+**在线演示（GitHub Pages）：https://wadesha.github.io/foreign-trade-data-framework/**
 
 # 外贸后台全场景数据补充体系 · 项目展示
 
 从最底层数据元模型（实体 · 属性 · 关系）出发，构建外贸后台全场景数据补充框架，并通过**家族化数据集**模拟生成可复现的演示数据。涵盖多平台、多渠道、全品类、ROI 监控四个扩展维度。
 
-> 部署后请将第一行链接中的 `your-username` 与仓库名替换为你自己的 GitHub 用户名 / 仓库名。
+> 仓库地址：https://github.com/Wadesha/foreign-trade-data-framework
+> 部署 GitHub Pages 后，第一行链接即可访问（见下方「部署到 GitHub Pages」）。
 
 ## 在线演示内容（9 个页签）
 
@@ -53,8 +54,7 @@ python3 -m http.server 8000
 
 1. 将本目录推送到 GitHub 仓库（`index.html` 位于仓库根目录）
 2. 仓库 **Settings → Pages → Build and deployment → Source** 选择 `main` 分支 / 根目录
-3. 访问 `https://<你的用户名>.github.io/<仓库名>/`
-4. 将本文件第一行的演示链接替换为实际地址
+3. 访问 `https://wadesha.github.io/foreign-trade-data-framework/`
 
 ## 技术说明
 
